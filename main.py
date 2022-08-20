@@ -5,7 +5,7 @@ import sys
 
 from PyQt5.QtWidgets import QApplication
 
-from GUI.MainWindow import MainWindow
+from views.MainWindow import MainWindow
 
 #######################################################
 # EXECUTE APP

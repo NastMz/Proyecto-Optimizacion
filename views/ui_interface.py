@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\GUI\Qt\interface.ui'
+# Form implementation generated from reading ui file '.\views\Qt\interface.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.7
 #
@@ -595,4 +595,4 @@ class Ui_MainWindow(object):
         self.label_8.setText(_translate("MainWindow", "Perfil"))
         self.label_9.setText(_translate("MainWindow", "Más..."))
         self.label_13.setText(_translate("MainWindow", "<strong>Desarrollado por:</strong> Kevin Santiago Martinez - Joshep Mateo Granada"))
-import GUI.resources_rc
+import views.resources_rc

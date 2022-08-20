@@ -5,9 +5,9 @@ from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QMainWindow, QGraphicsDropShadowEffect
 
 #######################################################
-# IMPORT GUI FILE
+# IMPORT views FILE
 #######################################################
-from GUI.ui_interface import Ui_MainWindow
+from views.ui_interface import Ui_MainWindow
 
 
 #######################################################
