@@ -64,4 +64,4 @@ b = a.solution
 
 c = a.solution.get_objective_value()
 
-print(b, c)
+print(a.interval_coefficients[0][1])

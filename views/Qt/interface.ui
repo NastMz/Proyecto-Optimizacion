@@ -79,7 +79,7 @@
 	border-radius: 10px;
 }
 
-QLineEdit, QComboBox, QDoubleSpinBox, QTableWidget {
+QLineEdit, QComboBox, QDoubleSpinBox {
 	padding: 5px;
 	border-radius: 7px;
 	background-color: #343b47;
@@ -94,6 +94,13 @@ QLineEdit, QComboBox, QDoubleSpinBox, QTableWidget {
 
  #profitsFrame QPushButton:hover,  #frame_17 QPushButton:hover, #frame_4 QPushButton:hover {
 	background-color: #2c313c;
+}
+
+QTableWidget {
+	padding: 5px;
+	border-radius: 7px;
+	background-color: #16191d;
+	color: #838ea2;
 }</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -671,7 +678,7 @@ QPushButton:hover {
                 <item>
                  <widget class="QStackedWidget" name="stackedWidget_3">
                   <property name="currentIndex">
-                   <number>0</number>
+                   <number>1</number>
                   </property>
                   <widget class="QWidget" name="homePage">
                    <property name="styleSheet">
@@ -1081,7 +1088,7 @@ QPushButton:hover {
                          <property name="frameShadow">
                           <enum>QFrame::Raised</enum>
                          </property>
-                         <layout class="QHBoxLayout" name="horizontalLayout_19" stretch="4,6">
+                         <layout class="QHBoxLayout" name="horizontalLayout_19" stretch="5,6">
                           <property name="spacing">
                            <number>6</number>
                           </property>
@@ -1132,10 +1139,45 @@ QPushButton:hover {
                                  </widget>
                                 </item>
                                 <item>
-                                 <widget class="QComboBox" name="comboBox"/>
+                                 <widget class="QComboBox" name="options"/>
                                 </item>
                                 <item>
                                  <spacer name="horizontalSpacer_6">
+                                  <property name="orientation">
+                                   <enum>Qt::Horizontal</enum>
+                                  </property>
+                                  <property name="sizeHint" stdset="0">
+                                   <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                   </size>
+                                  </property>
+                                 </spacer>
+                                </item>
+                               </layout>
+                              </widget>
+                             </item>
+                             <item>
+                              <widget class="QFrame" name="frame_24">
+                               <property name="frameShape">
+                                <enum>QFrame::StyledPanel</enum>
+                               </property>
+                               <property name="frameShadow">
+                                <enum>QFrame::Raised</enum>
+                               </property>
+                               <layout class="QHBoxLayout" name="horizontalLayout_26">
+                                <item>
+                                 <widget class="QLabel" name="label_22">
+                                  <property name="text">
+                                   <string>Producto:</string>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QComboBox" name="items"/>
+                                </item>
+                                <item>
+                                 <spacer name="horizontalSpacer_13">
                                   <property name="orientation">
                                    <enum>Qt::Horizontal</enum>
                                   </property>
@@ -1171,8 +1213,20 @@ QPushButton:hover {
                                   <property name="enabled">
                                    <bool>false</bool>
                                   </property>
+                                  <property name="sizePolicy">
+                                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                   </sizepolicy>
+                                  </property>
+                                  <property name="inputMask">
+                                   <string/>
+                                  </property>
                                   <property name="text">
-                                   <string>$ 0</string>
+                                   <string>$ </string>
+                                  </property>
+                                  <property name="readOnly">
+                                   <bool>false</bool>
                                   </property>
                                  </widget>
                                 </item>
@@ -1209,17 +1263,45 @@ QPushButton:hover {
                                  </widget>
                                 </item>
                                 <item>
-                                 <widget class="QLabel" name="label_21">
-                                  <property name="text">
-                                   <string>$</string>
+                                 <widget class="QLineEdit" name="underLimit">
+                                  <property name="enabled">
+                                   <bool>false</bool>
                                   </property>
-                                  <property name="alignment">
-                                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                  <property name="text">
+                                   <string>$ 0</string>
                                   </property>
                                  </widget>
                                 </item>
                                 <item>
-                                 <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
+                                 <widget class="QLabel" name="label">
+                                  <property name="text">
+                                   <string>&lt;=</string>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QDoubleSpinBox" name="newValue">
+                                  <property name="prefix">
+                                   <string>$ </string>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QLabel" name="label_3">
+                                  <property name="text">
+                                   <string>&lt;=</string>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QLineEdit" name="overLimit">
+                                  <property name="enabled">
+                                   <bool>false</bool>
+                                  </property>
+                                  <property name="text">
+                                   <string>$ 0</string>
+                                  </property>
+                                 </widget>
                                 </item>
                                 <item>
                                  <spacer name="horizontalSpacer_8">
@@ -1260,7 +1342,7 @@ QPushButton:hover {
                                  </spacer>
                                 </item>
                                 <item>
-                                 <widget class="QPushButton" name="pushButton">
+                                 <widget class="QPushButton" name="simulateBtn">
                                   <property name="cursor">
                                    <cursorShape>PointingHandCursor</cursorShape>
                                   </property>
@@ -1340,13 +1422,33 @@ QPushButton:hover {
                           <item>
                            <widget class="QTextEdit" name="textEdit">
                             <property name="enabled">
-                             <bool>false</bool>
+                             <bool>true</bool>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Roboto</family>
+                              <pointsize>12</pointsize>
+                              <weight>75</weight>
+                              <bold>true</bold>
+                             </font>
+                            </property>
+                            <property name="frameShape">
+                             <enum>QFrame::NoFrame</enum>
+                            </property>
+                            <property name="frameShadow">
+                             <enum>QFrame::Plain</enum>
+                            </property>
+                            <property name="sizeAdjustPolicy">
+                             <enum>QAbstractScrollArea::AdjustToContents</enum>
+                            </property>
+                            <property name="readOnly">
+                             <bool>true</bool>
                             </property>
                             <property name="html">
                              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Roboto'; font-size:8.25pt; font-weight:600; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Roboto'; font-size:12pt; font-weight:600; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                             </property>
                            </widget>

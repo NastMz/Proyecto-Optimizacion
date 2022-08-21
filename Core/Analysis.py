@@ -34,7 +34,24 @@ def model_szl(p_x1, p_x2, p_x3, p_x4, pm_x1, pm_x2, pm_x3, pm_x4, bill_x1, bill_
 
 
 class Analysis:
-    def __init__(self):
+    def __init__(self,
+                 p_x1=1918,
+                 p_x2=1158,
+                 p_x3=896,
+                 p_x4=1868,
+                 pm_x1=19051,
+                 pm_x2=22680,
+                 pm_x3=10000,
+                 pm_x4=3780,
+                 bill_x1=750000,
+                 bill_x2=325000,
+                 bill_x3=325000,
+                 bill_x4=600000,
+                 d_x1=10,
+                 d_x2=10,
+                 d_x3=4,
+                 d_x4=6
+                 ):
         self.products_name = ['canela', 'clavo', 'uva pasa', 'ajo sal']
         self.constraints_name = ['materia prima canela', 'materia prima clavo', 'materia prima uva pasa',
                                  'materia prima ajo sal', 'presupuesto canela', 'presupuesto clavo',
@@ -42,22 +59,22 @@ class Analysis:
                                  'demanda clavo', 'demanda uva pasa', 'demanda ajo sal']
 
         self.mdl = model_szl(
-            p_x1=1918,
-            p_x2=1158,
-            p_x3=896,
-            p_x4=1868,
-            pm_x1=19051,
-            pm_x2=22680,
-            pm_x3=10000,
-            pm_x4=3780,
-            bill_x1=750000,
-            bill_x2=325000,
-            bill_x3=325000,
-            bill_x4=600000,
-            d_x1=10,
-            d_x2=10,
-            d_x3=4,
-            d_x4=6
+            p_x1=p_x1,
+            p_x2=p_x2,
+            p_x3=p_x3,
+            p_x4=p_x4,
+            pm_x1=pm_x1,
+            pm_x2=pm_x2,
+            pm_x3=pm_x3,
+            pm_x4=pm_x4,
+            bill_x1=bill_x1,
+            bill_x2=bill_x2,
+            bill_x3=bill_x3,
+            bill_x4=bill_x4,
+            d_x1=d_x1,
+            d_x2=d_x2,
+            d_x3=d_x3,
+            d_x4=d_x4
         )
         self.solution = self.mdl.solve(log_output=True)
         self.number_of_constraints = self.mdl.number_of_constraints
@@ -74,11 +91,11 @@ class Analysis:
     def get_dual_price(self):
         # Precios duales
         precio_dual = self.mdl.dual_values(self.const)
-        print("")
-        # Imprimir precios duales de cada restricción
-        for n in range(self.number_of_constraints):
-            print("Si cambia en una unidad el valor de " + self.constraints_name[n] + ", esto lo beneficiara en " +
-                  str(precio_dual[n]) + " pesos.")
+        # print("")
+        # # Imprimir precios duales de cada restricción
+        # for n in range(self.number_of_constraints):
+        #     print("Si cambia en una unidad el valor de " + self.constraints_name[n] + ", esto lo beneficiara en " +
+        #           str(precio_dual[n]) + " pesos.")
         return precio_dual
 
     def get_solution(self):

@@ -75,10 +75,14 @@ class MainWindow(QMainWindow):
         clean_boards(self.boards_phase_one)
         clean_boards(self.boards_phase_two)
 
+        # GET OPTIMAL VALUES
         self.analysis = Analysis()
 
-        self.ui.stackedWidget_3.setCurrentIndex(0)
+        self.optimal_values = self.analysis.solution.get_values(self.analysis.get_var_list())
+        self.optimal_profit = self.analysis.solution.get_objective_value()
+        self.dual_prices = self.analysis.get_dual_price()
 
+        # WINDOW BUTTONS
         self.ui.minimizeBtn.clicked.connect(lambda: self.showMinimized())
         self.ui.closeBtn.clicked.connect(lambda: self.close())
 
@@ -112,6 +116,8 @@ class MainWindow(QMainWindow):
         self.ui.restoreBtn.hide()
 
         # SIDEBAR
+        self.ui.stackedWidget_3.setCurrentIndex(0)
+
         self.ui.menuBtn.clicked.connect(self.toggle_menu)
 
         self.ui.homeBtn.clicked.connect(lambda: self.set_page(0))
@@ -119,6 +125,7 @@ class MainWindow(QMainWindow):
         self.ui.reportBtn.clicked.connect(lambda: self.set_page(2))
         self.ui.simplexBtn.clicked.connect(lambda: self.set_page(3))
 
+        # FILL SIMPLEX BOARDS
         self.set_table(self.boards_phase_one)
         self.set_table(self.boards_phase_two)
 
@@ -126,8 +133,19 @@ class MainWindow(QMainWindow):
         self.ui.pushButton_3.clicked.connect(lambda: self.set_board(direction=1))
         self.ui.pushButton_2.clicked.connect(lambda: self.set_board(direction=0))
 
+        # FILL MAIN INFO
         self.set_values()
         self.draw_pie_chart()
+
+        # FILL ANALYSIS OPTIONS
+        self.fill_combobox()
+
+        self.ui.options.currentIndexChanged.connect(lambda: self.on_combobox_change())
+        self.ui.items.currentIndexChanged.connect(lambda: self.on_combobox_change())
+
+        self.on_combobox_change()
+
+        self.ui.simulateBtn.clicked.connect(lambda: self.simulate())
 
         # SHOW WINDOW
         self.show()
@@ -263,10 +281,138 @@ class MainWindow(QMainWindow):
         self.ui.graphic.addWidget(Canvas(self.analysis.solution.get_values(self.analysis.get_var_list())))
 
     def set_values(self):
-        values = self.analysis.solution.get_values(self.analysis.get_var_list())
-        self.ui.canelaValue.setText(str(f'$ {values[0]:.2f}'))
-        self.ui.clavoValue.setText(str(f'$ {values[1]:.2f}'))
-        self.ui.uvaValue.setText(str(f'$ {values[2]:.2f}'))
-        self.ui.ajoValue.setText(str(f'$ {values[3]:.2f}'))
-        self.ui.profitValue.setText(str(f'$ {self.analysis.solution.get_objective_value():.2f}'))
+        self.ui.canelaValue.setText(str(f'$ {self.optimal_values[0]:.2f}'))
+        self.ui.clavoValue.setText(str(f'$ {self.optimal_values[1]:.2f}'))
+        self.ui.uvaValue.setText(str(f'$ {self.optimal_values[2]:.2f}'))
+        self.ui.ajoValue.setText(str(f'$ {self.optimal_values[3]:.2f}'))
+        self.ui.profitValue.setText(str(f'$ {self.optimal_profit:.2f}'))
+
+    def fill_combobox(self):
+        options = ['Precio de Venta', 'Cantidad Materia Prima', 'Cantidad Presupuesto', 'Cantidad Demanda']
+        items = ['Canela', 'Clavo', 'Uva Pasa', 'Ajo Sal']
+        for option in options:
+            self.ui.options.addItem(option)
+        for item in items:
+            self.ui.items.addItem(item)
+
+    def on_combobox_change(self):
+        values = [
+            [1918, 1158, 896, 1868],
+            [19051, 22680, 10000, 3780],
+            [750000, 325000, 325000, 600000],
+            [10, 10, 4, 6]
+        ]
+        option = self.ui.options.currentIndex()
+        item = self.ui.items.currentIndex()
+        self.ui.elementValue.setText(str(f'$ {values[option][item]:.2f}'))
+        self.ui.newValue.setValue(0)
+        if option == 0:
+            self.ui.newValue.setMinimum(float(self.analysis.interval_coefficients[item][0]))
+            self.ui.newValue.setMaximum(float(self.analysis.interval_coefficients[item][1]))
+            self.ui.underLimit.setText(str(f'{self.analysis.interval_coefficients[item][0]:.2f}'))
+            self.ui.overLimit.setText(str(f'{self.analysis.interval_coefficients[item][1]:.2f}'))
+        elif option == 1:
+            self.ui.newValue.setMinimum(float(self.analysis.right_interval[item][0]))
+            self.ui.newValue.setMaximum(float(self.analysis.right_interval[item][1]))
+            self.ui.underLimit.setText(str(f'{self.analysis.right_interval[item][0]:.2f}'))
+            self.ui.overLimit.setText(str(f'{self.analysis.right_interval[item][1]:.2f}'))
+        elif option == 2:
+            self.ui.newValue.setMinimum(float(self.analysis.right_interval[item+4][0]))
+            self.ui.newValue.setMaximum(float(self.analysis.right_interval[item+4][1]))
+            self.ui.underLimit.setText(str(f'{self.analysis.right_interval[item+4][0]:.2f}'))
+            self.ui.overLimit.setText(str(f'{self.analysis.right_interval[item+4][1]:.2f}'))
+        elif option == 3:
+            self.ui.newValue.setMinimum(float(self.analysis.right_interval[item+8][0]))
+            self.ui.newValue.setMaximum(float(self.analysis.right_interval[item+8][1]))
+            self.ui.underLimit.setText(str(f'{self.analysis.right_interval[item+8][0]:.2f}'))
+            self.ui.overLimit.setText(str(f'{self.analysis.right_interval[item+8][1]:.2f}'))
+
+    def simulate(self):
+        option = self.ui.options.currentIndex()
+        item = self.ui.items.currentIndex()
+        new_value = self.ui.newValue.value()
+        new_value = float(new_value)
+        analysis = None
+        if option == 0:
+            if item == 0:
+                analysis = Analysis(p_x1=new_value)
+            elif item == 1:
+                analysis = Analysis(p_x2=new_value)
+            elif item == 2:
+                analysis = Analysis(p_x3=new_value)
+            elif item == 3:
+                analysis = Analysis(p_x4=new_value)
+        elif option == 1:
+            if item == 0:
+                analysis = Analysis(pm_x1=new_value)
+            elif item == 1:
+                analysis = Analysis(pm_x2=new_value)
+            elif item == 2:
+                analysis = Analysis(pm_x3=new_value)
+            elif item == 3:
+                analysis = Analysis(pm_x4=new_value)
+        elif option == 2:
+            if item == 0:
+                analysis = Analysis(bill_x1=new_value)
+            elif item == 1:
+                analysis = Analysis(bill_x2=new_value)
+            elif item == 2:
+                analysis = Analysis(bill_x3=new_value)
+            elif item == 3:
+                analysis = Analysis(bill_x4=new_value)
+        elif option == 3:
+            if item == 0:
+                analysis = Analysis(d_x1=new_value)
+            elif item == 1:
+                analysis = Analysis(d_x2=new_value)
+            elif item == 2:
+                analysis = Analysis(d_x3=new_value)
+            elif item == 3:
+                analysis = Analysis(d_x4=new_value)
+
+        optimal_values = analysis.solution.get_values(analysis.get_var_list())
+        optimal_profit = analysis.solution.get_objective_value()
+        dual_prices = analysis.get_dual_price()
+
+        self.ui.textEdit.setText(
+            f"""
+            <h3>Resultados</h3>
+            <hr>
+            <table style="border: 1px solid #fff;">
+              <tr>
+                <th>Actual</th>
+                <th>Simulación</th>
+              </tr>
+              <tr>
+                <td>
+                    <strong>Ventas:</strong>
+                    <ul>
+                        <li><strong>Canela:</strong> {self.optimal_values[0]:.2f} Unidades</li>
+                        <li><strong>Clavo: </strong> {self.optimal_values[1]:.2f} Unidades</li>
+                        <li><strong>Uva Pasa: </strong> {self.optimal_values[2]:.2f} Unidades</li>
+                        <li><strong>Ajo Sal: </strong> {self.optimal_values[3]:.2f} Unidades</li>
+                    </ul>
+                </td>
+                <td>
+                    <strong>Ventas:</strong>
+                    <ul>
+                        <li><strong>Canela:</strong> {optimal_values[0]:.2f} Unidades</li>
+                        <li><strong>Clavo: </strong> {optimal_values[1]:.2f} Unidades</li>
+                        <li><strong>Uva Pasa: </strong> {optimal_values[2]:.2f} Unidades</li>
+                        <li><strong>Ajo Sal: </strong> {optimal_values[3]:.2f} Unidades</li>
+                    </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <strong>Utilidad:</strong> {self.optimal_profit:.2f}
+                </td>
+                <td>
+                    <strong>Utilidad:</strong> {optimal_profit:.2f}
+                </td>
+              </tr>
+            </table>
+            """
+        )
+
 
