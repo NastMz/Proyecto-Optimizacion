@@ -265,7 +265,7 @@ QTableWidget {
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_3">
                 <property name="spacing">
-                 <number>0</number>
+                 <number>5</number>
                 </property>
                 <property name="leftMargin">
                  <number>0</number>
@@ -351,34 +351,11 @@ QTableWidget {
                   </property>
                  </widget>
                 </item>
-                <item>
-                 <widget class="QPushButton" name="simplexBtn">
-                  <property name="cursor">
-                   <cursorShape>PointingHandCursor</cursorShape>
-                  </property>
-                  <property name="toolTip">
-                   <string>Ver Reportes</string>
-                  </property>
-                  <property name="text">
-                   <string>Tableros</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="resources.qrc">
-                    <normaloff>:/icons/Assets/icons/table.svg</normaloff>:/icons/Assets/icons/table.svg</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>24</width>
-                    <height>24</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
                </layout>
               </widget>
              </item>
              <item>
-              <spacer name="verticalSpacer">
+              <spacer name="verticalSpacer_4">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
                </property>
@@ -389,6 +366,29 @@ QTableWidget {
                 </size>
                </property>
               </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="simplexBtn">
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="toolTip">
+                <string>Ver Reportes</string>
+               </property>
+               <property name="text">
+                <string>Tableros</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resources.qrc">
+                 <normaloff>:/icons/Assets/icons/table.svg</normaloff>:/icons/Assets/icons/table.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+              </widget>
              </item>
              <item alignment="Qt::AlignBottom">
               <widget class="QFrame" name="frame_3">
@@ -678,7 +678,7 @@ QPushButton:hover {
                 <item>
                  <widget class="QStackedWidget" name="stackedWidget_3">
                   <property name="currentIndex">
-                   <number>0</number>
+                   <number>1</number>
                   </property>
                   <widget class="QWidget" name="homePage">
                    <property name="styleSheet">

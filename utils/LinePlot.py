@@ -8,8 +8,8 @@ class LinePlot(FigureCanvas):
         super().__init__(self.fig)
 
         plt.plot(series['Value'], marker='o', color='#838ea2')
-        plt.ylabel('Histórico Simulaciones', color='#fff')
-        plt.title('Utilidad', color='#fff')
+        plt.ylabel('Utilidad', color='#fff')
+        plt.title('Histórico Simulaciones', color='#fff')
 
         self.ax.set_facecolor('#1f232a')
         self.ax.spines['bottom'].set_color('#1f232a')

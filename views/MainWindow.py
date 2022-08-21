@@ -301,10 +301,10 @@ class MainWindow(QMainWindow):
         self.ui.graphic.addWidget(BarPlot(self.analysis.solution.get_values(self.analysis.get_var_list())))
 
     def set_values(self):
-        self.ui.canelaValue.setText(str(f'$ {self.optimal_values[0]:.2f}'))
-        self.ui.clavoValue.setText(str(f'$ {self.optimal_values[1]:.2f}'))
-        self.ui.uvaValue.setText(str(f'$ {self.optimal_values[2]:.2f}'))
-        self.ui.ajoValue.setText(str(f'$ {self.optimal_values[3]:.2f}'))
+        self.ui.canelaValue.setText(str(f'$ {1918:.2f}'))
+        self.ui.clavoValue.setText(str(f'$ {1158:.2f}'))
+        self.ui.uvaValue.setText(str(f'$ {896:.2f}'))
+        self.ui.ajoValue.setText(str(f'$ {1868:.2f}'))
         self.ui.profitValue.setText(str(f'$ {self.optimal_profit:.2f}'))
 
     def fill_combobox(self):
@@ -402,7 +402,7 @@ class MainWindow(QMainWindow):
 
         self.ui.textEdit.append(
             f"""
-                    <h3>Resultados</h3>
+                    <h3>Resultados Simulación {len(self.timeseries_data['Name'])}</h3>
                     <hr>
                     <table style="border: 1px solid #fff;">
                       <tr>
