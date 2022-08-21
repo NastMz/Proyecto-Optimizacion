@@ -1,9 +1,13 @@
+import copy
+
 from PyQt5 import QtCore
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt, QPropertyAnimation
 from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import QMainWindow, QGraphicsDropShadowEffect
+from PyQt5.QtWidgets import QMainWindow, QGraphicsDropShadowEffect, QTableWidgetItem, QHeaderView
 
+from Core.Board import Board
+from Core.Simplex import Simplex
 #######################################################
 # IMPORT views FILE
 #######################################################
@@ -13,6 +17,24 @@ from views.ui_interface import Ui_MainWindow
 #######################################################
 # MAIN WINDOW CLASS
 #######################################################
+def clean_boards(boards):
+    for board in boards:
+        for row in range(len(board)):
+            row_content = copy.deepcopy(board[row])
+            index = None
+            for item in row_content:
+                if type(item) == list:
+                    index = row_content.index(item)
+                    break
+            if index is not None:
+                line = row_content[index]
+                after = row_content[index + 1:]
+                row_content = row_content[:index]
+                row_content += line
+                row_content += after
+            board[row] = row_content
+
+
 class MainWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
@@ -21,6 +43,37 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.dragPos = None
+
+        self.board = Board(
+            variables=['X1', 'X2', 'X3', 'X4', 'S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10', 'S11',
+                       'S12', 'A1',
+                       'A2', 'A3', 'A4', 'CR'],
+            solution_variables=['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'A1', 'A2', 'A3', 'A4'],
+            solution_coefficients=[0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+            function_coefficients=[1918, 1158, 896, 1868, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            restrictions_coefficients=[
+                [12, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19051],
+                [0, 10, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22680],
+                [0, 0, 50, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10000],
+                [0, 0, 0, 60, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3780],
+                [1421, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 750000],
+                [0, 858, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 325000],
+                [0, 0, 664, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 325000],
+                [0, 0, 0, 1384, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 600000],
+                [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 1, 0, 0, 0, 10],
+                [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 1, 0, 0, 10],
+                [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 1, 0, 4],
+                [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 1, 6]
+            ],
+            function_phase_one_coefficients=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1]
+        )
+
+        self.boards_phase_one, self.boards_phase_two = Simplex().simplex_two_phases(self.board)
+
+        clean_boards(self.boards_phase_one)
+        clean_boards(self.boards_phase_two)
+
+        self.ui.stackedWidget_3.setCurrentIndex(0)
 
         self.ui.minimizeBtn.clicked.connect(lambda: self.showMinimized())
         self.ui.closeBtn.clicked.connect(lambda: self.close())
@@ -57,14 +110,17 @@ class MainWindow(QMainWindow):
         # SIDEBAR
         self.ui.menuBtn.clicked.connect(self.toggle_menu)
 
-        self.ui.settingsBtn.clicked.connect(lambda: self.toggle_submenu(0, 0))
-        self.ui.infoBtn.clicked.connect(lambda: self.toggle_submenu(1, 1))
-        self.ui.helpBtn.clicked.connect(lambda: self.toggle_submenu(2, 2))
-        self.ui.closeSubMenuBtn.clicked.connect(lambda: self.toggle_submenu())
+        self.ui.homeBtn.clicked.connect(lambda: self.set_page(0))
+        self.ui.analisisBtn.clicked.connect(lambda: self.set_page(1))
+        self.ui.reportBtn.clicked.connect(lambda: self.set_page(2))
+        self.ui.simplexBtn.clicked.connect(lambda: self.set_page(3))
 
-        self.ui.userBtn.clicked.connect(lambda: self.toggle_right_menu(0, 0))
-        self.ui.moreBtn.clicked.connect(lambda: self.toggle_right_menu(1, 1))
-        self.ui.closeRightMenuBtn.clicked.connect(lambda: self.toggle_right_menu())
+        self.set_table(self.boards_phase_one)
+        self.set_table(self.boards_phase_two)
+
+        self.ui.pushButton_2.setEnabled(False)
+        self.ui.pushButton_3.clicked.connect(lambda: self.set_board(direction=1))
+        self.ui.pushButton_2.clicked.connect(lambda: self.set_board(direction=0))
 
         # SHOW WINDOW
         self.show()
@@ -82,7 +138,34 @@ class MainWindow(QMainWindow):
         self.ui.maximizeBtn.hide()
         self.ui.restoreBtn.show()
 
-    def toggle_menu(self, index):
+    def set_page(self, index):
+        self.ui.stackedWidget_3.setCurrentIndex(index)
+        selected_style = "background-color: #1f232a;"
+
+        unselected_style = "background-color: #16191d;"
+
+        if index == 0:
+            self.ui.homeBtn.setStyleSheet(selected_style)
+            self.ui.analisisBtn.setStyleSheet(unselected_style)
+            self.ui.reportBtn.setStyleSheet(unselected_style)
+            self.ui.simplexBtn.setStyleSheet(unselected_style)
+        elif index == 1:
+            self.ui.homeBtn.setStyleSheet(unselected_style)
+            self.ui.analisisBtn.setStyleSheet(selected_style)
+            self.ui.reportBtn.setStyleSheet(unselected_style)
+            self.ui.simplexBtn.setStyleSheet(unselected_style)
+        elif index == 2:
+            self.ui.homeBtn.setStyleSheet(unselected_style)
+            self.ui.analisisBtn.setStyleSheet(unselected_style)
+            self.ui.reportBtn.setStyleSheet(selected_style)
+            self.ui.simplexBtn.setStyleSheet(unselected_style)
+        elif index == 3:
+            self.ui.homeBtn.setStyleSheet(unselected_style)
+            self.ui.analisisBtn.setStyleSheet(unselected_style)
+            self.ui.reportBtn.setStyleSheet(unselected_style)
+            self.ui.simplexBtn.setStyleSheet(selected_style)
+
+    def toggle_menu(self):
         width = self.ui.leftMenuContainer.width()
         self.animation = QPropertyAnimation(self.ui.leftMenuContainer, b'maximumWidth')
         default = 50
@@ -95,38 +178,6 @@ class MainWindow(QMainWindow):
         self.animation.setEndValue(extend)
         self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
         self.animation.start()
-        
-    def toggle_submenu(self, btn=None, index=None):
-        width = self.ui.centerMenuContainer.width()
-        self.animation = QPropertyAnimation(self.ui.centerMenuContainer, b'maximumWidth')
-        default = 0
-        if width == default or width == 200 and self.ui.stackedWidget.currentIndex() != btn and btn is not None:
-            extend = 200
-        else:
-            extend = default
-        self.animation.setDuration(300)
-        self.animation.setStartValue(width)
-        self.animation.setEndValue(extend)
-        self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
-        self.animation.start()
-        if index is not None:
-            self.ui.stackedWidget.setCurrentIndex(index)
-
-    def toggle_right_menu(self, btn=None, index=None):
-        width = self.ui.rightMenuContainer.width()
-        self.animation = QPropertyAnimation(self.ui.rightMenuContainer, b'maximumWidth')
-        default = 0
-        if width == default or width == 200 and self.ui.stackedWidget_2.currentIndex() != btn and btn is not None:
-            extend = 200
-        else:
-            extend = default
-        self.animation.setDuration(300)
-        self.animation.setStartValue(width)
-        self.animation.setEndValue(extend)
-        self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
-        self.animation.start()
-        if index is not None:
-            self.ui.stackedWidget_2.setCurrentIndex(index)
 
     #######################################################
     # SIZE GRIP
@@ -151,3 +202,52 @@ class MainWindow(QMainWindow):
             self.showMaximized()
         else:
             self.showNormal()
+
+    def set_board(self, direction):
+        if direction == 1:
+            if self.ui.stackedWidget.currentIndex() < self.ui.stackedWidget.count() - 1:
+                self.ui.stackedWidget.setCurrentIndex(self.ui.stackedWidget.currentIndex() + 1)
+                self.ui.pushButton_2.setEnabled(True)
+            else:
+                self.ui.pushButton_3.setEnabled(False)
+        elif direction == 0:
+            if self.ui.stackedWidget.currentIndex() > 0:
+                self.ui.stackedWidget.setCurrentIndex(self.ui.stackedWidget.currentIndex() - 1)
+                self.ui.pushButton_3.setEnabled(True)
+            else:
+                self.ui.pushButton_2.setEnabled(False)
+
+        if self.ui.stackedWidget.currentIndex() < len(self.boards_phase_one):
+            self.ui.iteration.setText(str(self.ui.stackedWidget.currentIndex()))
+        else:
+            self.ui.iteration.setText(str(self.ui.stackedWidget.currentIndex()-len(self.boards_phase_one)))
+        if self.ui.stackedWidget.currentIndex() >= len(self.boards_phase_one):
+            self.ui.fase.setText('Fase 2')
+        else:
+            self.ui.fase.setText('Fase 1')
+
+    def set_table(self, board):
+        for board in board:
+            page = QtWidgets.QWidget()
+            vertical_layout = QtWidgets.QVBoxLayout(page)
+            simplex_table = QtWidgets.QTableWidget(page)
+            simplex_table.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
+            simplex_table.setRowCount(len(board))
+            simplex_table.setColumnCount(len(board[0]))
+            simplex_table.horizontalHeader().setVisible(False)
+            simplex_table.verticalHeader().setVisible(False)
+            row = 0
+            for line in board:
+                column = 0
+                for item in line:
+                    if type(item) == str or type(item) == int:
+                        cell = QTableWidgetItem(str(item))
+                    else:
+                        cell = QTableWidgetItem(str(f'{item:.2f}'))
+                    cell.setTextAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
+                    simplex_table.setItem(row, column, cell)
+                    column += 1
+                row += 1
+            simplex_table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
+            vertical_layout.addWidget(simplex_table)
+            self.ui.stackedWidget.addWidget(page)

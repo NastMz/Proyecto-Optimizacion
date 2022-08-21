@@ -77,6 +77,51 @@ def get_pivot_column(board, phase):
         return actual_board[-1].index(max(actual_board[-1]))
 
 
+def get_solution_coefficients(solution_variables, variables, function_coefficients):
+    solution_coefficients = []
+    indexes = []
+    for variable in solution_variables:
+        if variable in variables:
+            indexes.append(variables.index(variable))
+    for index in indexes:
+        solution_coefficients.append(function_coefficients[index])
+    return solution_coefficients
+
+
+def get_pivot_row(actual_board, pivot_column):
+    quotients = get_quotients(board=actual_board, pivot_column=pivot_column)
+
+    minor_quotient = get_minor_quotient(quotients=quotients)
+
+    pivot_row = quotients.index(minor_quotient)
+    pivot_element = actual_board[pivot_row][pivot_column]
+
+    return pivot_row, pivot_element
+
+
+def get_boards(boards, board, solution_variables, solution_coefficients, pivot_column, pivot_row, actual_board,
+               function_coefficients):
+    boards.append(copy.deepcopy(
+        get_full_board(function_coefficients, board.variables, actual_board, solution_variables,
+                       solution_coefficients)))
+
+    solution_variables[pivot_row] = board.variables[pivot_column]
+    solution_coefficients[pivot_row] = board.function_phase_one_coefficients[pivot_column]
+
+
+def update_board(actual_board, pivot_row, pivot_element, pivot_column):
+    for i in range(0, len(actual_board[pivot_row])):
+        actual_board[pivot_row][i] = actual_board[pivot_row][i] / pivot_element
+
+    operators = get_operators(actual_board=actual_board, pivot_column=pivot_column,
+                              pivot_row=pivot_row)
+
+    for i in range(len(actual_board)):
+        for j in range(len(actual_board[pivot_row])):
+            if operators[i] is not None and i != pivot_row:
+                actual_board[i][j] = actual_board[i][j] + (actual_board[pivot_row][j] * operators[i])
+
+
 def end_status(z, phase):
     status = True
     if phase == 1:
@@ -103,24 +148,17 @@ def solve_phase_one_of_simplex_two_phases(board):
     solution_coefficients.append(' ')
     phase_two_start_board = None
     end = False
-    it = 0
     while not end:
         actual_board.append(get_zj(board, actual_board, solution_coefficients))
         actual_board.append(get_optimality_criterion(board, board.function_phase_one_coefficients, actual_board))
         pivot_column = get_pivot_column(actual_board, 1)
-        quotients = get_quotients(board=actual_board, pivot_column=pivot_column)
 
-        minor_quotient = get_minor_quotient(quotients=quotients)
+        pivot_row, pivot_element = get_pivot_row(actual_board=actual_board, pivot_column=pivot_column)
 
-        pivot_row = quotients.index(minor_quotient)
-        pivot_element = actual_board[pivot_row][pivot_column]
+        get_boards(actual_board=actual_board, pivot_column=pivot_column, pivot_row=pivot_row, board=board,
+                   boards=boards, solution_variables=solution_variables, solution_coefficients=solution_coefficients,
+                   function_coefficients=board.function_phase_one_coefficients)
 
-        boards.append(copy.deepcopy(
-            get_full_board(board.function_phase_one_coefficients, board.variables, actual_board, solution_variables,
-                           solution_coefficients)))
-
-        solution_variables[pivot_row] = board.variables[pivot_column]
-        solution_coefficients[pivot_row] = board.function_phase_one_coefficients[pivot_column]
         end = end_status(actual_board[-2], 1)
         actual_board.pop()
         actual_board.pop()
@@ -128,29 +166,9 @@ def solve_phase_one_of_simplex_two_phases(board):
         if end:
             phase_two_start_board = actual_board
 
-        for i in range(0, len(actual_board[pivot_row])):
-            actual_board[pivot_row][i] = actual_board[pivot_row][i] / pivot_element
-
-        operators = get_operators(actual_board=actual_board, pivot_column=pivot_column,
-                                  pivot_row=pivot_row)
-
-        for i in range(len(actual_board)):
-            for j in range(len(actual_board[pivot_row])):
-                if operators[i] is not None and i != pivot_row:
-                    actual_board[i][j] = actual_board[i][j] + (actual_board[pivot_row][j] * operators[i])
-        it += 1
+        update_board(actual_board=actual_board, pivot_row=pivot_row, pivot_column=pivot_column,
+                     pivot_element=pivot_element)
     return boards, phase_two_start_board, solution_variables
-
-
-def get_solution_coefficients(solution_variables, variables, function_coefficients):
-    solution_coefficients = []
-    indexes = []
-    for variable in solution_variables:
-        if variable in variables:
-            indexes.append(variables.index(variable))
-    for index in indexes:
-        solution_coefficients.append(function_coefficients[index])
-    return solution_coefficients
 
 
 class Simplex:
@@ -184,31 +202,18 @@ class Simplex:
             actual_board.append(get_zj(board, actual_board, solution_coefficients))
             actual_board.append(get_optimality_criterion(board, board.function_coefficients, actual_board))
             pivot_column = get_pivot_column(actual_board, 2)
-            quotients = get_quotients(board=actual_board, pivot_column=pivot_column)
 
-            minor_quotient = get_minor_quotient(quotients=quotients)
+            pivot_row, pivot_element = get_pivot_row(actual_board=actual_board, pivot_column=pivot_column)
 
-            pivot_row = quotients.index(minor_quotient)
-            pivot_element = actual_board[pivot_row][pivot_column]
+            get_boards(actual_board=actual_board, pivot_column=pivot_column, pivot_row=pivot_row, board=board,
+                       boards=phase_two_boards, solution_variables=solution_variables,
+                       solution_coefficients=solution_coefficients, function_coefficients=board.function_coefficients)
 
-            phase_two_boards.append(copy.deepcopy(
-                get_full_board(board.function_coefficients, board.variables, actual_board, solution_variables,
-                               solution_coefficients)))
-
-            solution_variables[pivot_row] = board.variables[pivot_column]
-            solution_coefficients[pivot_row] = board.function_coefficients[pivot_column]
             end = end_status(actual_board[-2], 2)
             actual_board.pop()
             actual_board.pop()
 
-            for i in range(0, len(actual_board[pivot_row])):
-                actual_board[pivot_row][i] = actual_board[pivot_row][i] / pivot_element
+            update_board(actual_board=actual_board, pivot_row=pivot_row, pivot_column=pivot_column,
+                         pivot_element=pivot_element)
 
-            operators = get_operators(actual_board=actual_board, pivot_column=pivot_column,
-                                      pivot_row=pivot_row)
-
-            for i in range(len(actual_board)):
-                for j in range(len(actual_board[pivot_row])):
-                    if operators[i] is not None and i != pivot_row:
-                        actual_board[i][j] = actual_board[i][j] + (actual_board[pivot_row][j] * operators[i])
         return phase_one_boards, phase_two_boards
