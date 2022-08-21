@@ -60,4 +60,8 @@ from Core.Simplex import Simplex
 
 a = Analysis()
 
-a.get_dual_price()
+b = a.solution
+
+c = a.solution.get_objective_value()
+
+print(b, c)

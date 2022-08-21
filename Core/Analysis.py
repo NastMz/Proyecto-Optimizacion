@@ -4,7 +4,7 @@ from docplex.mp.model import Model
 def model_szl(p_x1, p_x2, p_x3, p_x4, pm_x1, pm_x2, pm_x3, pm_x4, bill_x1, bill_x2, bill_x3, bill_x4, d_x1, d_x2, d_x3,
               d_x4):
     # Inicializamos el modelo
-    mdl = Model('Sazon_Llan')
+    mdl = Model('Sazon_Llano')
 
     # Crear las variables
     x1 = mdl.continuous_var(name='x1')
@@ -101,3 +101,9 @@ class Analysis:
             print(
                 "Usted puede cambiar la cantidad de " + self.constraints_name[n] + " entre el intervalo: " + str(
                     self.right_interval[n]))
+
+    def get_var_list(self):
+        # Crear una lista con las variables
+        var_list = [self.mdl.get_var_by_name('x1'), self.mdl.get_var_by_name('x2'),
+                    self.mdl.get_var_by_name('x3'), self.mdl.get_var_by_name('x4')]
+        return var_list

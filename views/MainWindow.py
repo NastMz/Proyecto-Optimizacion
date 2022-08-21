@@ -6,8 +6,10 @@ from PyQt5.QtCore import Qt, QPropertyAnimation
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QMainWindow, QGraphicsDropShadowEffect, QTableWidgetItem, QHeaderView
 
+from Core.Analysis import Analysis
 from Core.Board import Board
 from Core.Simplex import Simplex
+from utils.Canvas import Canvas
 #######################################################
 # IMPORT views FILE
 #######################################################
@@ -73,6 +75,8 @@ class MainWindow(QMainWindow):
         clean_boards(self.boards_phase_one)
         clean_boards(self.boards_phase_two)
 
+        self.analysis = Analysis()
+
         self.ui.stackedWidget_3.setCurrentIndex(0)
 
         self.ui.minimizeBtn.clicked.connect(lambda: self.showMinimized())
@@ -121,6 +125,9 @@ class MainWindow(QMainWindow):
         self.ui.pushButton_2.setEnabled(False)
         self.ui.pushButton_3.clicked.connect(lambda: self.set_board(direction=1))
         self.ui.pushButton_2.clicked.connect(lambda: self.set_board(direction=0))
+
+        self.set_values()
+        self.draw_pie_chart()
 
         # SHOW WINDOW
         self.show()
@@ -220,7 +227,7 @@ class MainWindow(QMainWindow):
         if self.ui.stackedWidget.currentIndex() < len(self.boards_phase_one):
             self.ui.iteration.setText(str(self.ui.stackedWidget.currentIndex()))
         else:
-            self.ui.iteration.setText(str(self.ui.stackedWidget.currentIndex()-len(self.boards_phase_one)))
+            self.ui.iteration.setText(str(self.ui.stackedWidget.currentIndex() - len(self.boards_phase_one)))
         if self.ui.stackedWidget.currentIndex() >= len(self.boards_phase_one):
             self.ui.fase.setText('Fase 2')
         else:
@@ -251,3 +258,15 @@ class MainWindow(QMainWindow):
             simplex_table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
             vertical_layout.addWidget(simplex_table)
             self.ui.stackedWidget.addWidget(page)
+
+    def draw_pie_chart(self):
+        self.ui.graphic.addWidget(Canvas(self.analysis.solution.get_values(self.analysis.get_var_list())))
+
+    def set_values(self):
+        values = self.analysis.solution.get_values(self.analysis.get_var_list())
+        self.ui.canelaValue.setText(str(f'$ {values[0]:.2f}'))
+        self.ui.clavoValue.setText(str(f'$ {values[1]:.2f}'))
+        self.ui.uvaValue.setText(str(f'$ {values[2]:.2f}'))
+        self.ui.ajoValue.setText(str(f'$ {values[3]:.2f}'))
+        self.ui.profitValue.setText(str(f'$ {self.analysis.solution.get_objective_value():.2f}'))
+

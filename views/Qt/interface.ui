@@ -671,7 +671,7 @@ QPushButton:hover {
                 <item>
                  <widget class="QStackedWidget" name="stackedWidget_3">
                   <property name="currentIndex">
-                   <number>3</number>
+                   <number>0</number>
                   </property>
                   <widget class="QWidget" name="homePage">
                    <property name="styleSheet">
@@ -967,7 +967,7 @@ QPushButton:hover {
                          <property name="frameShadow">
                           <enum>QFrame::Raised</enum>
                          </property>
-                         <layout class="QVBoxLayout" name="verticalLayout_20" stretch="2,8">
+                         <layout class="QVBoxLayout" name="verticalLayout_20" stretch="1,9">
                           <property name="spacing">
                            <number>0</number>
                           </property>
@@ -995,7 +995,7 @@ QPushButton:hover {
                              <item>
                               <widget class="QLabel" name="label_10">
                                <property name="text">
-                                <string>Utilidad Actual:</string>
+                                <string>Utilidad:</string>
                                </property>
                               </widget>
                              </item>
@@ -1261,6 +1261,9 @@ QPushButton:hover {
                                 </item>
                                 <item>
                                  <widget class="QPushButton" name="pushButton">
+                                  <property name="cursor">
+                                   <cursorShape>PointingHandCursor</cursorShape>
+                                  </property>
                                   <property name="toolTip">
                                    <string>Realizar Simulación</string>
                                   </property>
@@ -1530,8 +1533,18 @@ p, li { white-space: pre-wrap; }
                              </property>
                              <item>
                               <widget class="QPushButton" name="pushButton_2">
+                               <property name="cursor">
+                                <cursorShape>PointingHandCursor</cursorShape>
+                               </property>
+                               <property name="toolTip">
+                                <string>Siguiente Tablero</string>
+                               </property>
                                <property name="text">
-                                <string>Anterior</string>
+                                <string/>
+                               </property>
+                               <property name="icon">
+                                <iconset resource="resources.qrc">
+                                 <normaloff>:/icons/Assets/icons/arrow-left-circle.svg</normaloff>:/icons/Assets/icons/arrow-left-circle.svg</iconset>
                                </property>
                               </widget>
                              </item>
@@ -1550,8 +1563,18 @@ p, li { white-space: pre-wrap; }
                              </item>
                              <item>
                               <widget class="QPushButton" name="pushButton_3">
+                               <property name="cursor">
+                                <cursorShape>PointingHandCursor</cursorShape>
+                               </property>
+                               <property name="toolTip">
+                                <string>Siguiente Tablero</string>
+                               </property>
                                <property name="text">
-                                <string>Siguiente</string>
+                                <string/>
+                               </property>
+                               <property name="icon">
+                                <iconset resource="resources.qrc">
+                                 <normaloff>:/icons/Assets/icons/arrow-right-circle.svg</normaloff>:/icons/Assets/icons/arrow-right-circle.svg</iconset>
                                </property>
                               </widget>
                              </item>
