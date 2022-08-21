@@ -1,5 +1,6 @@
 import copy
 
+import pandas as pd
 from PyQt5 import QtCore
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt, QPropertyAnimation
@@ -9,7 +10,8 @@ from PyQt5.QtWidgets import QMainWindow, QGraphicsDropShadowEffect, QTableWidget
 from Core.Analysis import Analysis
 from Core.Board import Board
 from Core.Simplex import Simplex
-from utils.Canvas import Canvas
+from utils.BarPlot import BarPlot
+from utils.LinePlot import LinePlot
 #######################################################
 # IMPORT views FILE
 #######################################################
@@ -81,6 +83,24 @@ class MainWindow(QMainWindow):
         self.optimal_values = self.analysis.solution.get_values(self.analysis.get_var_list())
         self.optimal_profit = self.analysis.solution.get_objective_value()
         self.dual_prices = self.analysis.get_dual_price()
+
+        # Defne Data
+
+        self.timeseries_data = {
+            'Name': ['Actual'],
+
+            'Value': [self.optimal_profit]
+        }
+
+        # Create dataframe
+
+        self.dataframe = pd.DataFrame(self.timeseries_data, columns=['Name', 'Value'])
+
+        # Setting the Date as index
+
+        self.dataframe = self.dataframe.set_index("Name")
+
+        self.ui.verticalLayout_23.addWidget(LinePlot(self.dataframe))
 
         # WINDOW BUTTONS
         self.ui.minimizeBtn.clicked.connect(lambda: self.showMinimized())
@@ -278,7 +298,7 @@ class MainWindow(QMainWindow):
             self.ui.stackedWidget.addWidget(page)
 
     def draw_pie_chart(self):
-        self.ui.graphic.addWidget(Canvas(self.analysis.solution.get_values(self.analysis.get_var_list())))
+        self.ui.graphic.addWidget(BarPlot(self.analysis.solution.get_values(self.analysis.get_var_list())))
 
     def set_values(self):
         self.ui.canelaValue.setText(str(f'$ {self.optimal_values[0]:.2f}'))
@@ -317,15 +337,15 @@ class MainWindow(QMainWindow):
             self.ui.underLimit.setText(str(f'{self.analysis.right_interval[item][0]:.2f}'))
             self.ui.overLimit.setText(str(f'{self.analysis.right_interval[item][1]:.2f}'))
         elif option == 2:
-            self.ui.newValue.setMinimum(float(self.analysis.right_interval[item+4][0]))
-            self.ui.newValue.setMaximum(float(self.analysis.right_interval[item+4][1]))
-            self.ui.underLimit.setText(str(f'{self.analysis.right_interval[item+4][0]:.2f}'))
-            self.ui.overLimit.setText(str(f'{self.analysis.right_interval[item+4][1]:.2f}'))
+            self.ui.newValue.setMinimum(float(self.analysis.right_interval[item + 4][0]))
+            self.ui.newValue.setMaximum(float(self.analysis.right_interval[item + 4][1]))
+            self.ui.underLimit.setText(str(f'{self.analysis.right_interval[item + 4][0]:.2f}'))
+            self.ui.overLimit.setText(str(f'{self.analysis.right_interval[item + 4][1]:.2f}'))
         elif option == 3:
-            self.ui.newValue.setMinimum(float(self.analysis.right_interval[item+8][0]))
-            self.ui.newValue.setMaximum(float(self.analysis.right_interval[item+8][1]))
-            self.ui.underLimit.setText(str(f'{self.analysis.right_interval[item+8][0]:.2f}'))
-            self.ui.overLimit.setText(str(f'{self.analysis.right_interval[item+8][1]:.2f}'))
+            self.ui.newValue.setMinimum(float(self.analysis.right_interval[item + 8][0]))
+            self.ui.newValue.setMaximum(float(self.analysis.right_interval[item + 8][1]))
+            self.ui.underLimit.setText(str(f'{self.analysis.right_interval[item + 8][0]:.2f}'))
+            self.ui.overLimit.setText(str(f'{self.analysis.right_interval[item + 8][1]:.2f}'))
 
     def simulate(self):
         option = self.ui.options.currentIndex()
@@ -372,47 +392,52 @@ class MainWindow(QMainWindow):
 
         optimal_values = analysis.solution.get_values(analysis.get_var_list())
         optimal_profit = analysis.solution.get_objective_value()
-        dual_prices = analysis.get_dual_price()
 
-        self.ui.textEdit.setText(
+        self.timeseries_data['Name'] = self.timeseries_data['Name'] + [f"Simulación {len(self.timeseries_data['Name'])}"]
+        self.timeseries_data['Value'] = self.timeseries_data['Value'] + [optimal_profit]
+        self.dataframe = pd.DataFrame(self.timeseries_data, columns=['Name', 'Value'])
+        self.dataframe = self.dataframe.set_index("Name")
+
+        self.ui.verticalLayout_23.replaceWidget(self.ui.verticalLayout_23.itemAt(0).widget(), LinePlot(self.dataframe))
+
+        self.ui.textEdit.append(
             f"""
-            <h3>Resultados</h3>
-            <hr>
-            <table style="border: 1px solid #fff;">
-              <tr>
-                <th>Actual</th>
-                <th>Simulación</th>
-              </tr>
-              <tr>
-                <td>
-                    <strong>Ventas:</strong>
-                    <ul>
-                        <li><strong>Canela:</strong> {self.optimal_values[0]:.2f} Unidades</li>
-                        <li><strong>Clavo: </strong> {self.optimal_values[1]:.2f} Unidades</li>
-                        <li><strong>Uva Pasa: </strong> {self.optimal_values[2]:.2f} Unidades</li>
-                        <li><strong>Ajo Sal: </strong> {self.optimal_values[3]:.2f} Unidades</li>
-                    </ul>
-                </td>
-                <td>
-                    <strong>Ventas:</strong>
-                    <ul>
-                        <li><strong>Canela:</strong> {optimal_values[0]:.2f} Unidades</li>
-                        <li><strong>Clavo: </strong> {optimal_values[1]:.2f} Unidades</li>
-                        <li><strong>Uva Pasa: </strong> {optimal_values[2]:.2f} Unidades</li>
-                        <li><strong>Ajo Sal: </strong> {optimal_values[3]:.2f} Unidades</li>
-                    </ul>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                    <strong>Utilidad:</strong> {self.optimal_profit:.2f}
-                </td>
-                <td>
-                    <strong>Utilidad:</strong> {optimal_profit:.2f}
-                </td>
-              </tr>
-            </table>
-            """
+                    <h3>Resultados</h3>
+                    <hr>
+                    <table style="border: 1px solid #fff;">
+                      <tr>
+                        <th>Actual</th>
+                        <th>Simulación</th>
+                      </tr>
+                      <tr>
+                        <td>
+                            <strong>Ventas:</strong>
+                            <ul>
+                                <li><strong>Canela:</strong> {self.optimal_values[0]:.2f} Unidades</li>
+                                <li><strong>Clavo: </strong> {self.optimal_values[1]:.2f} Unidades</li>
+                                <li><strong>Uva Pasa: </strong> {self.optimal_values[2]:.2f} Unidades</li>
+                                <li><strong>Ajo Sal: </strong> {self.optimal_values[3]:.2f} Unidades</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <strong>Ventas:</strong>
+                            <ul>
+                                <li><strong>Canela:</strong> {optimal_values[0]:.2f} Unidades</li>
+                                <li><strong>Clavo: </strong> {optimal_values[1]:.2f} Unidades</li>
+                                <li><strong>Uva Pasa: </strong> {optimal_values[2]:.2f} Unidades</li>
+                                <li><strong>Ajo Sal: </strong> {optimal_values[3]:.2f} Unidades</li>
+                            </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                            <strong>Utilidad:</strong> {self.optimal_profit:.2f}
+                        </td>
+                        <td>
+                            <strong>Utilidad:</strong> {optimal_profit:.2f}
+                        </td>
+                      </tr>
+                    </table>
+                    <br>
+                    """
         )
-
-

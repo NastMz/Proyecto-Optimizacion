@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib.backends.backend_qtagg import FigureCanvas
 
 
-class Canvas(FigureCanvas):
+class BarPlot(FigureCanvas):
     def __init__(self, solution):
         self.fig, self.ax = plt.subplots(1, figsize=(10, 10))
         super().__init__(self.fig)
