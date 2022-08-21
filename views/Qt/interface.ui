@@ -678,7 +678,7 @@ QPushButton:hover {
                 <item>
                  <widget class="QStackedWidget" name="stackedWidget_3">
                   <property name="currentIndex">
-                   <number>1</number>
+                   <number>0</number>
                   </property>
                   <widget class="QWidget" name="homePage">
                    <property name="styleSheet">
@@ -801,10 +801,13 @@ QPushButton:hover {
                                 <item>
                                  <widget class="QLineEdit" name="clavoValue">
                                   <property name="enabled">
-                                   <bool>false</bool>
+                                   <bool>true</bool>
                                   </property>
                                   <property name="text">
                                    <string>$ 0</string>
+                                  </property>
+                                  <property name="readOnly">
+                                   <bool>true</bool>
                                   </property>
                                  </widget>
                                 </item>
@@ -843,10 +846,13 @@ QPushButton:hover {
                                 <item>
                                  <widget class="QLineEdit" name="canelaValue">
                                   <property name="enabled">
-                                   <bool>false</bool>
+                                   <bool>true</bool>
                                   </property>
                                   <property name="text">
                                    <string>$ 0</string>
+                                  </property>
+                                  <property name="readOnly">
+                                   <bool>true</bool>
                                   </property>
                                  </widget>
                                 </item>
@@ -885,10 +891,13 @@ QPushButton:hover {
                                 <item>
                                  <widget class="QLineEdit" name="uvaValue">
                                   <property name="enabled">
-                                   <bool>false</bool>
+                                   <bool>true</bool>
                                   </property>
                                   <property name="text">
                                    <string>$ 0</string>
+                                  </property>
+                                  <property name="readOnly">
+                                   <bool>true</bool>
                                   </property>
                                  </widget>
                                 </item>
@@ -928,6 +937,9 @@ QPushButton:hover {
                                  <widget class="QLineEdit" name="ajoValue">
                                   <property name="text">
                                    <string>$ 0</string>
+                                  </property>
+                                  <property name="readOnly">
+                                   <bool>true</bool>
                                   </property>
                                  </widget>
                                 </item>
@@ -1009,10 +1021,13 @@ QPushButton:hover {
                              <item>
                               <widget class="QLineEdit" name="profitValue">
                                <property name="enabled">
-                                <bool>false</bool>
+                                <bool>true</bool>
                                </property>
                                <property name="text">
                                 <string>$ 0</string>
+                               </property>
+                               <property name="readOnly">
+                                <bool>true</bool>
                                </property>
                               </widget>
                              </item>
@@ -1211,7 +1226,7 @@ QPushButton:hover {
                                 <item>
                                  <widget class="QLineEdit" name="elementValue">
                                   <property name="enabled">
-                                   <bool>false</bool>
+                                   <bool>true</bool>
                                   </property>
                                   <property name="sizePolicy">
                                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -1226,7 +1241,7 @@ QPushButton:hover {
                                    <string>$ </string>
                                   </property>
                                   <property name="readOnly">
-                                   <bool>false</bool>
+                                   <bool>true</bool>
                                   </property>
                                  </widget>
                                 </item>
@@ -1265,10 +1280,13 @@ QPushButton:hover {
                                 <item>
                                  <widget class="QLineEdit" name="underLimit">
                                   <property name="enabled">
-                                   <bool>false</bool>
+                                   <bool>true</bool>
                                   </property>
                                   <property name="text">
                                    <string>$ 0</string>
+                                  </property>
+                                  <property name="readOnly">
+                                   <bool>true</bool>
                                   </property>
                                  </widget>
                                 </item>
@@ -1296,10 +1314,13 @@ QPushButton:hover {
                                 <item>
                                  <widget class="QLineEdit" name="overLimit">
                                   <property name="enabled">
-                                   <bool>false</bool>
+                                   <bool>true</bool>
                                   </property>
                                   <property name="text">
                                    <string>$ 0</string>
+                                  </property>
+                                  <property name="readOnly">
+                                   <bool>true</bool>
                                   </property>
                                  </widget>
                                 </item>
