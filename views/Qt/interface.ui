@@ -787,7 +787,7 @@ QPushButton:hover {
                 <item>
                  <widget class="QStackedWidget" name="stackedWidget_3">
                   <property name="currentIndex">
-                   <number>2</number>
+                   <number>0</number>
                   </property>
                   <widget class="QWidget" name="homePage">
                    <property name="styleSheet">
@@ -1420,6 +1420,12 @@ QPushButton:hover {
                              </item>
                              <item>
                               <widget class="QPushButton" name="viewSimplexBtn">
+                               <property name="cursor">
+                                <cursorShape>PointingHandCursor</cursorShape>
+                               </property>
+                               <property name="toolTip">
+                                <string>Ver Tableros Simplex</string>
+                               </property>
                                <property name="text">
                                 <string>Tableros</string>
                                </property>

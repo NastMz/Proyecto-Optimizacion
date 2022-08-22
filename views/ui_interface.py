@@ -671,6 +671,7 @@ class Ui_MainWindow(object):
         spacerItem12 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_13.addItem(spacerItem12)
         self.viewSimplexBtn = QtWidgets.QPushButton(self.profitsFrame)
+        self.viewSimplexBtn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.viewSimplexBtn.setIcon(icon5)
         self.viewSimplexBtn.setObjectName("viewSimplexBtn")
         self.horizontalLayout_13.addWidget(self.viewSimplexBtn)
@@ -1037,7 +1038,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget_3.setCurrentIndex(2)
+        self.stackedWidget_3.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -1077,6 +1078,7 @@ class Ui_MainWindow(object):
         self.ajoDual.setText(_translate("MainWindow", "$ 0"))
         self.label_10.setText(_translate("MainWindow", "Utilidad:"))
         self.profitValue.setText(_translate("MainWindow", "$ 0"))
+        self.viewSimplexBtn.setToolTip(_translate("MainWindow", "Ver Tableros Simplex"))
         self.viewSimplexBtn.setText(_translate("MainWindow", "Tableros"))
         self.generateReportBtn.setToolTip(_translate("MainWindow", "Ver Reporte"))
         self.generateReportBtn.setText(_translate("MainWindow", "Reporte"))
