@@ -17,10 +17,17 @@ class BarPlot(FigureCanvas):
         y_pos = np.arange(len(objects))
         performance = solution
 
-        plt.bar(y_pos, performance, align='center', color='#838ea2')
+        rects = plt.bar(y_pos, performance, align='center', color='#838ea2')
         plt.xticks(y_pos, objects)
         plt.ylabel('Cantidad', color='#fff')
         plt.title('Ventas necesarias para maximizar utilidad', color='#fff')
+
+        for rect in rects:
+            height = rect.get_height()
+            self.ax.text(rect.get_x() + rect.get_width() / 2., height-2,
+                         '%d' % float(height),
+                         ha='center', va='bottom', color='#fff')
+
         self.ax.set_facecolor('#1f232a')
         self.ax.spines['bottom'].set_color('#1f232a')
         self.ax.spines['top'].set_color('#1f232a')

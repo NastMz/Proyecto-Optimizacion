@@ -1,5 +1,6 @@
 import copy
 
+import numpy as np
 import pandas as pd
 from PyQt5 import QtCore
 from PyQt5 import QtWidgets
@@ -12,6 +13,7 @@ from Core.Board import Board
 from Core.Simplex import Simplex
 from utils.BarPlot import BarPlot
 from utils.LinePlot import LinePlot
+from utils.PiePlot import PiePlot
 #######################################################
 # IMPORT views FILE
 #######################################################
@@ -155,7 +157,7 @@ class MainWindow(QMainWindow):
 
         # FILL MAIN INFO
         self.set_values()
-        self.draw_pie_chart()
+        self.draw_chart()
 
         # FILL ANALYSIS OPTIONS
         self.fill_combobox()
@@ -166,6 +168,13 @@ class MainWindow(QMainWindow):
         self.on_combobox_change()
 
         self.ui.simulateBtn.clicked.connect(lambda: self.simulate())
+
+        # REPORT
+        self.generate_report()
+
+        # BUTTONS
+        self.ui.generateReportBtn.clicked.connect(lambda: self.set_page(2))
+        self.ui.viewSimplexBtn.clicked.connect(lambda: self.set_page(3))
 
         # SHOW WINDOW
         self.show()
@@ -297,7 +306,7 @@ class MainWindow(QMainWindow):
             vertical_layout.addWidget(simplex_table)
             self.ui.stackedWidget.addWidget(page)
 
-    def draw_pie_chart(self):
+    def draw_chart(self):
         self.ui.graphic.addWidget(BarPlot(self.analysis.solution.get_values(self.analysis.get_var_list())))
 
     def set_values(self):
@@ -305,6 +314,12 @@ class MainWindow(QMainWindow):
         self.ui.clavoValue.setText(str(f'$ {1158:.2f}'))
         self.ui.uvaValue.setText(str(f'$ {896:.2f}'))
         self.ui.ajoValue.setText(str(f'$ {1868:.2f}'))
+
+        self.ui.canelaDual.setText(str(f'$ {self.dual_prices[0]:.2f}'))
+        self.ui.clavoDual.setText(str(f'$ {self.dual_prices[1]:.2f}'))
+        self.ui.uvaDual.setText(str(f'$ {self.dual_prices[2]:.2f}'))
+        self.ui.ajoDual.setText(str(f'$ {self.dual_prices[3]:.2f}'))
+
         self.ui.profitValue.setText(str(f'$ {self.optimal_profit:.2f}'))
 
     def fill_combobox(self):
@@ -324,7 +339,10 @@ class MainWindow(QMainWindow):
         ]
         option = self.ui.options.currentIndex()
         item = self.ui.items.currentIndex()
-        self.ui.elementValue.setText(str(f'$ {values[option][item]:.2f}'))
+        if option == 0 or option == 2:
+            self.ui.elementValue.setText(str(f'$ {values[option][item]:.2f}'))
+        else:
+            self.ui.elementValue.setText(str(f'{values[option][item]:.2f}'))
         self.ui.newValue.setValue(0)
         if option == 0:
             self.ui.newValue.setMinimum(float(self.analysis.interval_coefficients[item][0]))
@@ -393,7 +411,10 @@ class MainWindow(QMainWindow):
         optimal_values = analysis.solution.get_values(analysis.get_var_list())
         optimal_profit = analysis.solution.get_objective_value()
 
-        self.timeseries_data['Name'] = self.timeseries_data['Name'] + [f"Simulación {len(self.timeseries_data['Name'])}"]
+        dual_prices = analysis.get_dual_price()
+
+        self.timeseries_data['Name'] = self.timeseries_data['Name'] + [
+            f"Simulación {len(self.timeseries_data['Name'])}"]
         self.timeseries_data['Value'] = self.timeseries_data['Value'] + [optimal_profit]
         self.dataframe = pd.DataFrame(self.timeseries_data, columns=['Name', 'Value'])
         self.dataframe = self.dataframe.set_index("Name")
@@ -402,7 +423,7 @@ class MainWindow(QMainWindow):
 
         self.ui.textEdit.append(
             f"""
-                    <h3>Resultados Simulación {len(self.timeseries_data['Name'])}</h3>
+                    <h3>Resultados Simulación {len(self.timeseries_data['Name']) - 1}</h3>
                     <hr>
                     <table style="border: 1px solid #fff;">
                       <tr>
@@ -431,6 +452,26 @@ class MainWindow(QMainWindow):
                       </tr>
                       <tr>
                         <td>
+                            <strong>Precio Duales:</strong>
+                            <ul>
+                                <li><strong>Canela:</strong> {self.dual_prices[0]:.2f} Unidades</li>
+                                <li><strong>Clavo: </strong> {self.dual_prices[1]:.2f} Unidades</li>
+                                <li><strong>Uva Pasa: </strong> {self.dual_prices[2]:.2f} Unidades</li>
+                                <li><strong>Ajo Sal: </strong> {self.dual_prices[3]:.2f} Unidades</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <strong>Precios Duales:</strong>
+                            <ul>
+                                <li><strong>Canela:</strong> {dual_prices[0]:.2f} Unidades</li>
+                                <li><strong>Clavo: </strong> {dual_prices[1]:.2f} Unidades</li>
+                                <li><strong>Uva Pasa: </strong> {dual_prices[2]:.2f} Unidades</li>
+                                <li><strong>Ajo Sal: </strong> {dual_prices[3]:.2f} Unidades</li>
+                            </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
                             <strong>Utilidad:</strong> {self.optimal_profit:.2f}
                         </td>
                         <td>
@@ -441,3 +482,50 @@ class MainWindow(QMainWindow):
                     <br>
                     """
         )
+
+    def generate_report(self):
+        self.ui.reportText.setHtml(
+            f"""
+                <html>
+                    <body style="text-align: justify;">
+                        <center><h2>Reporte</h2></center><br>
+                    Para maximizar la utilidad de su empresa en un valor de $1.747.835 diarios, usted deberá vender las siguientes cantidades de cada producto al día:
+                    <ul>
+                    <li><b>528</b> unidades de Canela</li>
+                    <li><b>379</b> unidades de Clavo</li>
+                    <li><b>200</b> unidades de Uva pasa</li>
+                    <li><b>63</b> unidades de Ajo sal</li>
+                    </ul>
+                    Además, debe tener en cuenta, que gracias a un proceso de analisis, descubrimos que al aumentar en una unidad las siguientes caracteristicas, puede aumentar la utilidad de su empresa.
+                    <ul>
+                        <li><b>Para la materia prima:</b></li>
+                        <ul>
+                        <li>Al aumentar en una unidad la materia prima de la canela no se logra aumentar la utilidad.</li>
+                        <li>Al aumentar en una unidad la materia prima del clavo no se logra aumentar la utilidad.</li>
+                        <li>Al aumentar en una unidad la materia prima de la uva pasa se logra aumentar la utilidad en <b>17.92$</b>.</li>
+                        <li>Al aumentar en una unidad la materia prima del ajo sal se logra aumentar la utilidad en <b>31.13$</b>.</li>
+                        </ul>
+                        <br>
+                        <li><b>Para el presupuesto:</b></li>
+                        <ul>
+                        <li>Al aumentar en una unidad el presupuesto para la canela se logra aumentar la utilidad en <b>1.35$</b>.</li>
+                        <li>Al aumentar en una unidad el presupuesto para el clavo se logra aumentar la utilidad en <b>1.35$</b>.</li>
+                        <li>Al aumentar en una unidad el presupuesto para la uva pasa no se logra aumentar la utilidad.</li>
+                        <li>Al aumentar en una unidad el presupuesto para el ajo sal no se logra aumentar la utilidad.</li>
+                        </ul>
+                        <br>
+                        <li><b>Para la demanda:</b></li>
+                        <ul>
+                        <li>Al aumentar en una unidad la demanda de la canela no se logra aumentar la utilidad.</li>
+                        <li>Al aumentar en una unidad la demanda del clavo no se logra aumentar la utilidad.</li>
+                        <li>Al aumentar en una unidad la demanda para la uva pasa no se logra aumentar la utilidad.</li>
+                        <li>Al aumentar en una unidad la demanda para el ajo sal no se logra aumentar la utilidad.</li>
+                        </ul>
+                    </ul>
+                    </body>
+                </html>
+            """
+        )
+
+        values = np.array(self.optimal_values) * [1918, 1158, 896, 1868]
+        self.ui.reportGraphic.addWidget(PiePlot(values))

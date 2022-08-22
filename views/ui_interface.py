@@ -14,11 +14,107 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(815, 483)
+        MainWindow.resize(927, 557)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/Assets/icons/pie-chart.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
-        MainWindow.setStyleSheet("")
+        MainWindow.setStyleSheet("QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background-color: rgb(56, 58, 89);\n"
+"    max-width: 10px;\n"
+"    margin: 10px 0 10px 0;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"    background-color: #2c313c;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"    border: none;\n"
+"    background-color: rgb(98, 114, 164);\n"
+"    height: 0;\n"
+"    border-top-left-radius: 5px;\n"
+"    border-top-right-radius: 5px;\n"
+"    subcontrol-position: top;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical:hover {\n"
+"    background-color: rgb(254, 121, 199);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical {\n"
+"    border: none;\n"
+"    background-color: rgb(98, 114, 164);\n"
+"    height: 0;\n"
+"    border-bottom-left-radius: 5px;\n"
+"    border-bottom-right-radius: 5px;\n"
+"    subcontrol-position: bottom;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical:hover {\n"
+"    background-color: rgb(254, 121, 199);\n"
+"}\n"
+"\n"
+"QScrollBar::up-arrow:vertical,  QScrollBar::down-arrow:vertical{\n"
+"    background: none;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:vertical,  QScrollBar::sub-page:vertical{\n"
+"    background: none;\n"
+"}\n"
+"\n"
+"/* Horizontal */\n"
+"\n"
+"QScrollBar:horizontal {\n"
+"    border: none;\n"
+"    background-color:  rgb(56, 58, 89);\n"
+"    max-height: 10px;\n"
+"    margin: 0 10px 0 10px;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal {\n"
+"    background-color: #2c313c;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"    border: none;\n"
+"    background-color: rgb(98, 114, 164);\n"
+"    width: 0;\n"
+"    subcontrol-position: left;\n"
+"    subcontrol-origin: margin;\n"
+"    border-top-left-radius: 5px;\n"
+"    border-bottom-left-radius: 5px;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal:hover {\n"
+"    background-color: rgb(254, 121, 199);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal {\n"
+"    border: none;\n"
+"    background-color: rgb(98, 114, 164);\n"
+"    width: 0;\n"
+"    subcontrol-position: right;\n"
+"    subcontrol-origin: margin;\n"
+"    border-top-right-radius: 5px;\n"
+"    border-bottom-right-radius: 5px;\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal:hover {\n"
+"    background-color: rgb(254, 121, 199);\n"
+"}\n"
+"\n"
+"QScrollBar::up-arrow:horizontal,  QScrollBar::down-arrow:horizontal{\n"
+"    background: none;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:horizontal,  QScrollBar::sub-page:horizontal{\n"
+"    background: none;\n"
+"}")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setStyleSheet("* {\n"
 "    border: none;\n"
@@ -96,10 +192,23 @@ class Ui_MainWindow(object):
 "\n"
 "QTableWidget {\n"
 "    padding: 5px;\n"
-"    border-radius: 7px;\n"
+"    border-radius: 8px;\n"
 "    background-color: #16191d;\n"
 "    color: #838ea2;\n"
-"}")
+"    gridline-color: #838ea2;\n"
+"    font-size: 12pt;\n"
+"}\n"
+"\n"
+"QTableWidget QTableCornerButton::section {\n"
+"    background-color: #16191d;\n"
+"    border: 1px solid #838ea2;\n"
+"}\n"
+"\n"
+"QHeaderView::section {\n"
+"    background-color: #16191d;\n"
+"    border: 1px solid #838ea2;  \n"
+"}\n"
+"")
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
@@ -353,11 +462,107 @@ class Ui_MainWindow(object):
         self.frame_10.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_10.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_10.setObjectName("frame_10")
-        self.verticalLayout_21 = QtWidgets.QVBoxLayout(self.frame_10)
-        self.verticalLayout_21.setContentsMargins(9, 9, 9, 9)
-        self.verticalLayout_21.setSpacing(0)
-        self.verticalLayout_21.setObjectName("verticalLayout_21")
-        self.label_14 = QtWidgets.QLabel(self.frame_10)
+        self.verticalLayout_11 = QtWidgets.QVBoxLayout(self.frame_10)
+        self.verticalLayout_11.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_11.setSpacing(0)
+        self.verticalLayout_11.setObjectName("verticalLayout_11")
+        self.frame_26 = QtWidgets.QFrame(self.frame_10)
+        self.frame_26.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_26.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_26.setObjectName("frame_26")
+        self.verticalLayout_9 = QtWidgets.QVBoxLayout(self.frame_26)
+        self.verticalLayout_9.setContentsMargins(0, 12, 0, 0)
+        self.verticalLayout_9.setSpacing(0)
+        self.verticalLayout_9.setObjectName("verticalLayout_9")
+        self.label_21 = QtWidgets.QLabel(self.frame_26)
+        font = QtGui.QFont()
+        font.setFamily("Roboto")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_21.setFont(font)
+        self.label_21.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_21.setObjectName("label_21")
+        self.verticalLayout_9.addWidget(self.label_21)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+        self.verticalLayout_9.addItem(spacerItem1)
+        self.frame_27 = QtWidgets.QFrame(self.frame_26)
+        self.frame_27.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_27.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_27.setObjectName("frame_27")
+        self.horizontalLayout_27 = QtWidgets.QHBoxLayout(self.frame_27)
+        self.horizontalLayout_27.setObjectName("horizontalLayout_27")
+        self.label_23 = QtWidgets.QLabel(self.frame_27)
+        self.label_23.setObjectName("label_23")
+        self.horizontalLayout_27.addWidget(self.label_23)
+        self.clavoValue = QtWidgets.QLineEdit(self.frame_27)
+        self.clavoValue.setEnabled(True)
+        self.clavoValue.setReadOnly(True)
+        self.clavoValue.setObjectName("clavoValue")
+        self.horizontalLayout_27.addWidget(self.clavoValue)
+        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_27.addItem(spacerItem2)
+        self.verticalLayout_9.addWidget(self.frame_27)
+        self.frame_28 = QtWidgets.QFrame(self.frame_26)
+        self.frame_28.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_28.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_28.setObjectName("frame_28")
+        self.horizontalLayout_28 = QtWidgets.QHBoxLayout(self.frame_28)
+        self.horizontalLayout_28.setObjectName("horizontalLayout_28")
+        self.label_24 = QtWidgets.QLabel(self.frame_28)
+        self.label_24.setObjectName("label_24")
+        self.horizontalLayout_28.addWidget(self.label_24)
+        self.canelaValue = QtWidgets.QLineEdit(self.frame_28)
+        self.canelaValue.setEnabled(True)
+        self.canelaValue.setReadOnly(True)
+        self.canelaValue.setObjectName("canelaValue")
+        self.horizontalLayout_28.addWidget(self.canelaValue)
+        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_28.addItem(spacerItem3)
+        self.verticalLayout_9.addWidget(self.frame_28)
+        self.frame_29 = QtWidgets.QFrame(self.frame_26)
+        self.frame_29.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_29.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_29.setObjectName("frame_29")
+        self.horizontalLayout_29 = QtWidgets.QHBoxLayout(self.frame_29)
+        self.horizontalLayout_29.setObjectName("horizontalLayout_29")
+        self.label_25 = QtWidgets.QLabel(self.frame_29)
+        self.label_25.setObjectName("label_25")
+        self.horizontalLayout_29.addWidget(self.label_25)
+        self.uvaValue = QtWidgets.QLineEdit(self.frame_29)
+        self.uvaValue.setEnabled(True)
+        self.uvaValue.setReadOnly(True)
+        self.uvaValue.setObjectName("uvaValue")
+        self.horizontalLayout_29.addWidget(self.uvaValue)
+        spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_29.addItem(spacerItem4)
+        self.verticalLayout_9.addWidget(self.frame_29)
+        self.frame_30 = QtWidgets.QFrame(self.frame_26)
+        self.frame_30.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_30.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_30.setObjectName("frame_30")
+        self.horizontalLayout_30 = QtWidgets.QHBoxLayout(self.frame_30)
+        self.horizontalLayout_30.setObjectName("horizontalLayout_30")
+        self.label_26 = QtWidgets.QLabel(self.frame_30)
+        self.label_26.setObjectName("label_26")
+        self.horizontalLayout_30.addWidget(self.label_26)
+        self.ajoValue = QtWidgets.QLineEdit(self.frame_30)
+        self.ajoValue.setReadOnly(True)
+        self.ajoValue.setObjectName("ajoValue")
+        self.horizontalLayout_30.addWidget(self.ajoValue)
+        spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_30.addItem(spacerItem5)
+        self.verticalLayout_9.addWidget(self.frame_30)
+        self.verticalLayout_11.addWidget(self.frame_26)
+        self.frame_11 = QtWidgets.QFrame(self.frame_10)
+        self.frame_11.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_11.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_11.setObjectName("frame_11")
+        self.verticalLayout_8 = QtWidgets.QVBoxLayout(self.frame_11)
+        self.verticalLayout_8.setContentsMargins(0, 12, 0, 0)
+        self.verticalLayout_8.setSpacing(0)
+        self.verticalLayout_8.setObjectName("verticalLayout_8")
+        self.label_14 = QtWidgets.QLabel(self.frame_11)
         font = QtGui.QFont()
         font.setFamily("Roboto")
         font.setPointSize(12)
@@ -366,61 +571,61 @@ class Ui_MainWindow(object):
         self.label_14.setFont(font)
         self.label_14.setAlignment(QtCore.Qt.AlignCenter)
         self.label_14.setObjectName("label_14")
-        self.verticalLayout_21.addWidget(self.label_14, 0, QtCore.Qt.AlignTop)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
-        self.verticalLayout_21.addItem(spacerItem1)
-        self.frame_11 = QtWidgets.QFrame(self.frame_10)
-        self.frame_11.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_11.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_11.setObjectName("frame_11")
-        self.horizontalLayout_15 = QtWidgets.QHBoxLayout(self.frame_11)
-        self.horizontalLayout_15.setObjectName("horizontalLayout_15")
-        self.label_16 = QtWidgets.QLabel(self.frame_11)
-        self.label_16.setObjectName("label_16")
-        self.horizontalLayout_15.addWidget(self.label_16)
-        self.clavoValue = QtWidgets.QLineEdit(self.frame_11)
-        self.clavoValue.setEnabled(True)
-        self.clavoValue.setReadOnly(True)
-        self.clavoValue.setObjectName("clavoValue")
-        self.horizontalLayout_15.addWidget(self.clavoValue)
-        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_15.addItem(spacerItem2)
-        self.verticalLayout_21.addWidget(self.frame_11)
-        self.frame_12 = QtWidgets.QFrame(self.frame_10)
+        self.verticalLayout_8.addWidget(self.label_14)
+        spacerItem6 = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+        self.verticalLayout_8.addItem(spacerItem6)
+        self.frame_12 = QtWidgets.QFrame(self.frame_11)
         self.frame_12.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_12.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_12.setObjectName("frame_12")
-        self.horizontalLayout_16 = QtWidgets.QHBoxLayout(self.frame_12)
-        self.horizontalLayout_16.setObjectName("horizontalLayout_16")
-        self.label_17 = QtWidgets.QLabel(self.frame_12)
-        self.label_17.setObjectName("label_17")
-        self.horizontalLayout_16.addWidget(self.label_17)
-        self.canelaValue = QtWidgets.QLineEdit(self.frame_12)
-        self.canelaValue.setEnabled(True)
-        self.canelaValue.setReadOnly(True)
-        self.canelaValue.setObjectName("canelaValue")
-        self.horizontalLayout_16.addWidget(self.canelaValue)
-        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_16.addItem(spacerItem3)
-        self.verticalLayout_21.addWidget(self.frame_12)
-        self.frame_13 = QtWidgets.QFrame(self.frame_10)
+        self.horizontalLayout_15 = QtWidgets.QHBoxLayout(self.frame_12)
+        self.horizontalLayout_15.setObjectName("horizontalLayout_15")
+        self.label_16 = QtWidgets.QLabel(self.frame_12)
+        self.label_16.setObjectName("label_16")
+        self.horizontalLayout_15.addWidget(self.label_16)
+        self.clavoDual = QtWidgets.QLineEdit(self.frame_12)
+        self.clavoDual.setEnabled(True)
+        self.clavoDual.setReadOnly(True)
+        self.clavoDual.setObjectName("clavoDual")
+        self.horizontalLayout_15.addWidget(self.clavoDual)
+        spacerItem7 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_15.addItem(spacerItem7)
+        self.verticalLayout_8.addWidget(self.frame_12)
+        self.frame_13 = QtWidgets.QFrame(self.frame_11)
         self.frame_13.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_13.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_13.setObjectName("frame_13")
-        self.horizontalLayout_17 = QtWidgets.QHBoxLayout(self.frame_13)
+        self.horizontalLayout_16 = QtWidgets.QHBoxLayout(self.frame_13)
+        self.horizontalLayout_16.setObjectName("horizontalLayout_16")
+        self.label_17 = QtWidgets.QLabel(self.frame_13)
+        self.label_17.setObjectName("label_17")
+        self.horizontalLayout_16.addWidget(self.label_17)
+        self.canelaDual = QtWidgets.QLineEdit(self.frame_13)
+        self.canelaDual.setEnabled(True)
+        self.canelaDual.setReadOnly(True)
+        self.canelaDual.setObjectName("canelaDual")
+        self.horizontalLayout_16.addWidget(self.canelaDual)
+        spacerItem8 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_16.addItem(spacerItem8)
+        self.verticalLayout_8.addWidget(self.frame_13)
+        self.frame_25 = QtWidgets.QFrame(self.frame_11)
+        self.frame_25.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_25.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_25.setObjectName("frame_25")
+        self.horizontalLayout_17 = QtWidgets.QHBoxLayout(self.frame_25)
         self.horizontalLayout_17.setObjectName("horizontalLayout_17")
-        self.label_18 = QtWidgets.QLabel(self.frame_13)
+        self.label_18 = QtWidgets.QLabel(self.frame_25)
         self.label_18.setObjectName("label_18")
         self.horizontalLayout_17.addWidget(self.label_18)
-        self.uvaValue = QtWidgets.QLineEdit(self.frame_13)
-        self.uvaValue.setEnabled(True)
-        self.uvaValue.setReadOnly(True)
-        self.uvaValue.setObjectName("uvaValue")
-        self.horizontalLayout_17.addWidget(self.uvaValue)
-        spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_17.addItem(spacerItem4)
-        self.verticalLayout_21.addWidget(self.frame_13)
-        self.frame_14 = QtWidgets.QFrame(self.frame_10)
+        self.uvaDual = QtWidgets.QLineEdit(self.frame_25)
+        self.uvaDual.setEnabled(True)
+        self.uvaDual.setReadOnly(True)
+        self.uvaDual.setObjectName("uvaDual")
+        self.horizontalLayout_17.addWidget(self.uvaDual)
+        spacerItem9 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_17.addItem(spacerItem9)
+        self.verticalLayout_8.addWidget(self.frame_25)
+        self.frame_14 = QtWidgets.QFrame(self.frame_11)
         self.frame_14.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_14.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_14.setObjectName("frame_14")
@@ -429,15 +634,16 @@ class Ui_MainWindow(object):
         self.label_19 = QtWidgets.QLabel(self.frame_14)
         self.label_19.setObjectName("label_19")
         self.horizontalLayout_18.addWidget(self.label_19)
-        self.ajoValue = QtWidgets.QLineEdit(self.frame_14)
-        self.ajoValue.setReadOnly(True)
-        self.ajoValue.setObjectName("ajoValue")
-        self.horizontalLayout_18.addWidget(self.ajoValue)
-        spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_18.addItem(spacerItem5)
-        self.verticalLayout_21.addWidget(self.frame_14)
-        spacerItem6 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_21.addItem(spacerItem6)
+        self.ajoDual = QtWidgets.QLineEdit(self.frame_14)
+        self.ajoDual.setReadOnly(True)
+        self.ajoDual.setObjectName("ajoDual")
+        self.horizontalLayout_18.addWidget(self.ajoDual)
+        spacerItem10 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_18.addItem(spacerItem10)
+        self.verticalLayout_8.addWidget(self.frame_14)
+        self.verticalLayout_11.addWidget(self.frame_11)
+        spacerItem11 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_11.addItem(spacerItem11)
         self.horizontalLayout_14.addWidget(self.frame_10)
         self.horizontalLayout_12.addWidget(self.productsListContainer)
         self.resumeContainer = QtWidgets.QFrame(self.homeContainer)
@@ -462,8 +668,12 @@ class Ui_MainWindow(object):
         self.profitValue.setReadOnly(True)
         self.profitValue.setObjectName("profitValue")
         self.horizontalLayout_13.addWidget(self.profitValue)
-        spacerItem7 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_13.addItem(spacerItem7)
+        spacerItem12 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_13.addItem(spacerItem12)
+        self.viewSimplexBtn = QtWidgets.QPushButton(self.profitsFrame)
+        self.viewSimplexBtn.setIcon(icon5)
+        self.viewSimplexBtn.setObjectName("viewSimplexBtn")
+        self.horizontalLayout_13.addWidget(self.viewSimplexBtn)
         self.generateReportBtn = QtWidgets.QPushButton(self.profitsFrame)
         self.generateReportBtn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.generateReportBtn.setIcon(icon4)
@@ -518,8 +728,8 @@ class Ui_MainWindow(object):
         self.options = QtWidgets.QComboBox(self.frame_22)
         self.options.setObjectName("options")
         self.horizontalLayout_20.addWidget(self.options)
-        spacerItem8 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_20.addItem(spacerItem8)
+        spacerItem13 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_20.addItem(spacerItem13)
         self.verticalLayout_24.addWidget(self.frame_22)
         self.frame_24 = QtWidgets.QFrame(self.frame_17)
         self.frame_24.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -533,8 +743,8 @@ class Ui_MainWindow(object):
         self.items = QtWidgets.QComboBox(self.frame_24)
         self.items.setObjectName("items")
         self.horizontalLayout_26.addWidget(self.items)
-        spacerItem9 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_26.addItem(spacerItem9)
+        spacerItem14 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_26.addItem(spacerItem14)
         self.verticalLayout_24.addWidget(self.frame_24)
         self.frame_19 = QtWidgets.QFrame(self.frame_17)
         self.frame_19.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -556,8 +766,8 @@ class Ui_MainWindow(object):
         self.elementValue.setReadOnly(True)
         self.elementValue.setObjectName("elementValue")
         self.horizontalLayout_21.addWidget(self.elementValue)
-        spacerItem10 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_21.addItem(spacerItem10)
+        spacerItem15 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_21.addItem(spacerItem15)
         self.verticalLayout_24.addWidget(self.frame_19)
         self.frame_20 = QtWidgets.QFrame(self.frame_17)
         self.frame_20.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -587,8 +797,8 @@ class Ui_MainWindow(object):
         self.overLimit.setReadOnly(True)
         self.overLimit.setObjectName("overLimit")
         self.horizontalLayout_22.addWidget(self.overLimit)
-        spacerItem11 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_22.addItem(spacerItem11)
+        spacerItem16 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_22.addItem(spacerItem16)
         self.verticalLayout_24.addWidget(self.frame_20)
         self.frame_21 = QtWidgets.QFrame(self.frame_17)
         self.frame_21.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -596,15 +806,15 @@ class Ui_MainWindow(object):
         self.frame_21.setObjectName("frame_21")
         self.horizontalLayout_23 = QtWidgets.QHBoxLayout(self.frame_21)
         self.horizontalLayout_23.setObjectName("horizontalLayout_23")
-        spacerItem12 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_23.addItem(spacerItem12)
+        spacerItem17 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_23.addItem(spacerItem17)
         self.simulateBtn = QtWidgets.QPushButton(self.frame_21)
         self.simulateBtn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.simulateBtn.setIcon(icon3)
         self.simulateBtn.setObjectName("simulateBtn")
         self.horizontalLayout_23.addWidget(self.simulateBtn)
-        spacerItem13 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_23.addItem(spacerItem13)
+        spacerItem18 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_23.addItem(spacerItem18)
         self.verticalLayout_24.addWidget(self.frame_21)
         self.horizontalLayout_19.addWidget(self.frame_17)
         self.frame_18 = QtWidgets.QFrame(self.frame_15)
@@ -644,22 +854,66 @@ class Ui_MainWindow(object):
         self.horizontalLayout_24.addWidget(self.textEdit)
         self.verticalLayout_22.addWidget(self.frame_16)
         self.verticalLayout_22.setStretch(0, 6)
-        self.verticalLayout_22.setStretch(1, 4)
+        self.verticalLayout_22.setStretch(1, 5)
         self.verticalLayout_17.addWidget(self.analisisContainer)
         self.stackedWidget_3.addWidget(self.analisisPage)
         self.reportsPage = QtWidgets.QWidget()
         self.reportsPage.setObjectName("reportsPage")
         self.verticalLayout_18 = QtWidgets.QVBoxLayout(self.reportsPage)
         self.verticalLayout_18.setObjectName("verticalLayout_18")
-        self.label_12 = QtWidgets.QLabel(self.reportsPage)
+        self.reportContainer = QtWidgets.QWidget(self.reportsPage)
+        self.reportContainer.setObjectName("reportContainer")
+        self.horizontalLayout_31 = QtWidgets.QHBoxLayout(self.reportContainer)
+        self.horizontalLayout_31.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_31.setSpacing(0)
+        self.horizontalLayout_31.setObjectName("horizontalLayout_31")
+        self.reportArea = QtWidgets.QScrollArea(self.reportContainer)
+        self.reportArea.setWidgetResizable(True)
+        self.reportArea.setObjectName("reportArea")
+        self.scrollAreaWidgetContents = QtWidgets.QWidget()
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 859, 446))
+        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
+        self.verticalLayout_12 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
+        self.verticalLayout_12.setContentsMargins(-1, 0, -1, -1)
+        self.verticalLayout_12.setObjectName("verticalLayout_12")
+        self.frame_31 = QtWidgets.QFrame(self.scrollAreaWidgetContents)
+        self.frame_31.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_31.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_31.setObjectName("frame_31")
+        self.horizontalLayout_32 = QtWidgets.QHBoxLayout(self.frame_31)
+        self.horizontalLayout_32.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_32.setSpacing(0)
+        self.horizontalLayout_32.setObjectName("horizontalLayout_32")
+        self.reportText = QtWidgets.QTextEdit(self.frame_31)
         font = QtGui.QFont()
         font.setFamily("Roboto")
         font.setBold(True)
         font.setWeight(75)
-        self.label_12.setFont(font)
-        self.label_12.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_12.setObjectName("label_12")
-        self.verticalLayout_18.addWidget(self.label_12)
+        self.reportText.setFont(font)
+        self.reportText.setStyleSheet("#reportText {\n"
+"font-weight: regular;\n"
+"}")
+        self.reportText.setReadOnly(True)
+        self.reportText.setObjectName("reportText")
+        self.horizontalLayout_32.addWidget(self.reportText)
+        self.frame_32 = QtWidgets.QFrame(self.frame_31)
+        self.frame_32.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_32.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_32.setObjectName("frame_32")
+        self.verticalLayout_14 = QtWidgets.QVBoxLayout(self.frame_32)
+        self.verticalLayout_14.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_14.setSpacing(0)
+        self.verticalLayout_14.setObjectName("verticalLayout_14")
+        self.reportGraphic = QtWidgets.QVBoxLayout()
+        self.reportGraphic.setObjectName("reportGraphic")
+        self.verticalLayout_14.addLayout(self.reportGraphic)
+        self.horizontalLayout_32.addWidget(self.frame_32)
+        self.horizontalLayout_32.setStretch(0, 5)
+        self.horizontalLayout_32.setStretch(1, 5)
+        self.verticalLayout_12.addWidget(self.frame_31)
+        self.reportArea.setWidget(self.scrollAreaWidgetContents)
+        self.horizontalLayout_31.addWidget(self.reportArea)
+        self.verticalLayout_18.addWidget(self.reportContainer)
         self.stackedWidget_3.addWidget(self.reportsPage)
         self.page = QtWidgets.QWidget()
         self.page.setObjectName("page")
@@ -698,8 +952,8 @@ class Ui_MainWindow(object):
         self.fase.setFont(font)
         self.fase.setObjectName("fase")
         self.horizontalLayout_25.addWidget(self.fase)
-        spacerItem14 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_25.addItem(spacerItem14)
+        spacerItem19 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_25.addItem(spacerItem19)
         self.label2 = QtWidgets.QLabel(self.frame_23)
         font = QtGui.QFont()
         font.setFamily("Roboto")
@@ -738,8 +992,8 @@ class Ui_MainWindow(object):
         self.pushButton_2.setIcon(icon10)
         self.pushButton_2.setObjectName("pushButton_2")
         self.horizontalLayout_9.addWidget(self.pushButton_2)
-        spacerItem15 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_9.addItem(spacerItem15)
+        spacerItem20 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_9.addItem(spacerItem20)
         self.pushButton_3 = QtWidgets.QPushButton(self.frame_4)
         self.pushButton_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_3.setText("")
@@ -783,7 +1037,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget_3.setCurrentIndex(1)
+        self.stackedWidget_3.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -803,17 +1057,27 @@ class Ui_MainWindow(object):
         self.maximizeBtn.setToolTip(_translate("MainWindow", "Restaurar"))
         self.restoreBtn.setToolTip(_translate("MainWindow", "Restaurar"))
         self.closeBtn.setToolTip(_translate("MainWindow", "Cerrar"))
-        self.label_14.setText(_translate("MainWindow", "PRODUCTOS"))
-        self.label_16.setText(_translate("MainWindow", "Clavo:"))
+        self.label_21.setText(_translate("MainWindow", "PRODUCTOS"))
+        self.label_23.setText(_translate("MainWindow", "Clavo:"))
         self.clavoValue.setText(_translate("MainWindow", "$ 0"))
-        self.label_17.setText(_translate("MainWindow", "Canela:"))
+        self.label_24.setText(_translate("MainWindow", "Canela:"))
         self.canelaValue.setText(_translate("MainWindow", "$ 0"))
-        self.label_18.setText(_translate("MainWindow", "Uva Pasa:"))
+        self.label_25.setText(_translate("MainWindow", "Uva Pasa:"))
         self.uvaValue.setText(_translate("MainWindow", "$ 0"))
-        self.label_19.setText(_translate("MainWindow", "Ajo Sal:"))
+        self.label_26.setText(_translate("MainWindow", "Ajo Sal:"))
         self.ajoValue.setText(_translate("MainWindow", "$ 0"))
+        self.label_14.setText(_translate("MainWindow", "PRECIOS DUALES"))
+        self.label_16.setText(_translate("MainWindow", "Clavo:"))
+        self.clavoDual.setText(_translate("MainWindow", "$ 0"))
+        self.label_17.setText(_translate("MainWindow", "Canela:"))
+        self.canelaDual.setText(_translate("MainWindow", "$ 0"))
+        self.label_18.setText(_translate("MainWindow", "Uva Pasa:"))
+        self.uvaDual.setText(_translate("MainWindow", "$ 0"))
+        self.label_19.setText(_translate("MainWindow", "Ajo Sal:"))
+        self.ajoDual.setText(_translate("MainWindow", "$ 0"))
         self.label_10.setText(_translate("MainWindow", "Utilidad:"))
         self.profitValue.setText(_translate("MainWindow", "$ 0"))
+        self.viewSimplexBtn.setText(_translate("MainWindow", "Tableros"))
         self.generateReportBtn.setToolTip(_translate("MainWindow", "Ver Reporte"))
         self.generateReportBtn.setText(_translate("MainWindow", "Reporte"))
         self.label_11.setText(_translate("MainWindow", "Elemento:"))
@@ -833,7 +1097,6 @@ class Ui_MainWindow(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Roboto\'; font-size:12pt; font-weight:600; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
-        self.label_12.setText(_translate("MainWindow", "Reportes"))
         self.label_2.setText(_translate("MainWindow", "Simplex Dos Fases"))
         self.fase.setText(_translate("MainWindow", "Fase 1"))
         self.label2.setText(_translate("MainWindow", "Iteración"))
