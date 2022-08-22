@@ -5,7 +5,7 @@ import sys
 
 from PyQt5.QtWidgets import QApplication
 
-from views.MainWindow import MainWindow
+from views.SplashScreen import SplashScreen
 
 #######################################################
 # EXECUTE APP
@@ -13,6 +13,6 @@ from views.MainWindow import MainWindow
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
-    window = MainWindow()
+    window = SplashScreen()
     window.show()
     sys.exit(app.exec_())

@@ -7,11 +7,6 @@ class BarPlot(FigureCanvas):
     def __init__(self, solution):
         self.fig, self.ax = plt.subplots(1, figsize=(10, 10))
         super().__init__(self.fig)
-        # y = solution
-        # labels = ["Canela", "Clavo", "Uva Pasa", "Ajo Sal"]
-
-        # self.ax.axis('off')
-        # self.ax.bar(y, labels=labels)
 
         objects = ("Canela", "Clavo", "Uva Pasa", "Ajo Sal")
         y_pos = np.arange(len(objects))
@@ -24,7 +19,7 @@ class BarPlot(FigureCanvas):
 
         for rect in rects:
             height = rect.get_height()
-            self.ax.text(rect.get_x() + rect.get_width() / 2., height-2,
+            self.ax.text(rect.get_x() + rect.get_width() / 2., height - 2,
                          '%d' % float(height),
                          ha='center', va='bottom', color='#fff')
 
