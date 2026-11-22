@@ -1,0 +1,16 @@
+# Fully pinned runtime environment (Python 3.13). Regenerate with: pip install . && pip freeze
+contourpy==1.4.0
+cycler==0.12.1
+fonttools==4.68.0
+kiwisolver==1.5.1
+matplotlib==3.11.2
+numpy==2.5.5
+packaging==26.3
+pillow==13.0.0
+pyparsing==3.3.3
+PySide6_Essentials==6.12.0
+python-dateutil==4.0.0
+QtAwesome==1.4.2
+QtPy==2.4.3
+shiboken6==6.12.0
+tzdata==2026.6
