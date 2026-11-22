@@ -32,4 +32,6 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-q"
+# QPrinter probes Windows COM printer interfaces; faulthandler would dump those handled
+# first-chance exceptions as noise, so it is disabled.
+addopts = "-q -p no:faulthandler"

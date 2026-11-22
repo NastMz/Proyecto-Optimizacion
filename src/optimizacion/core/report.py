@@ -11,10 +11,13 @@ from .scenarios import Scenario
 _UNITS = {Parameter.RAW_MATERIAL: "gramo", Parameter.BUDGET: "peso", Parameter.DEMAND: "unidad"}
 
 
-def build_report(scenario: Scenario, accent: str = "#B5462A", muted: str = "#7A6A5E") -> str:
+def build_report(
+    scenario: Scenario, accent: str = "#B5462A", muted: str = "#7A6A5E", heading_font: str = "Georgia, serif"
+) -> str:
     case = scenario.case
     result = scenario.result
-    title = f"<h1 style='color:{accent};margin-bottom:0'>Plan de producción diario</h1>"
+    heading = f"font-family:{heading_font};font-weight:normal"
+    title = f"<h1 style='color:{accent};margin-bottom:0;{heading}'>Plan de producción diario</h1>"
     subtitle = f"<p style='color:{muted};margin-top:2px'>{escape(case.company)} · {escape(scenario.label)}</p>"
     if not result.is_optimal or scenario.sensitivity is None:
         reason = "no tiene solución factible" if result.status.value == "infeasible" else "no está acotado"
@@ -41,7 +44,7 @@ def build_report(scenario: Scenario, accent: str = "#B5462A", muted: str = "#7A6
         )
     parts.append("</table>")
 
-    parts.append("<h2>Recursos y precios sombra</h2>")
+    parts.append(f"<h2 style='{heading}'>Recursos y precios sombra</h2>")
     parts.append(
         "<p>El precio sombra indica cuánto cambia la utilidad diaria si se aumenta en una unidad el lado "
         "derecho de la restricción, mientras el valor se mantenga dentro del rango indicado.</p>"
@@ -65,7 +68,7 @@ def build_report(scenario: Scenario, accent: str = "#B5462A", muted: str = "#7A6
             parts.append(f"<li><b>{escape(product.name)}:</b> {text}</li>")
         parts.append("</ul>")
 
-    parts.append("<h2>Rangos de optimalidad de la utilidad unitaria</h2><ul>")
+    parts.append(f"<h2 style='{heading}'>Rangos de optimalidad de la utilidad unitaria</h2><ul>")
     for product, variable in zip(case.products, sensitivity.variables):
         parts.append(
             f"<li><b>{escape(product.name)}:</b> el plan se mantiene mientras la utilidad por unidad esté en "
